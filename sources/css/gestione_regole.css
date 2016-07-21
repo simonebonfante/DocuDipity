@@ -1,0 +1,108 @@
+.loader{
+  position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('../immagini/spinner2.gif') 50% 50% no-repeat rgba(0,0,0,1);
+	background-size: 70px 70px;
+}
+.btn{
+	font-size: 16px;
+}
+
+.rules:hover{
+	cursor: pointer;
+}
+.onoffswitch {
+    position: relative; width: 72px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 25px; padding: 0; line-height: 25px;
+    font-size: 12px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "CSS";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "JS";
+    padding-right: 18px;
+    background-color: #FC5353; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 27px; margin: 1px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 43px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px; 
+}
+
+.evid{
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.sel{
+    text-decoration: underline;
+}
+#maincontent{
+    margin-top:60px;
+}
+span{
+    font-size: 120%;
+    cursor: pointer;
+}
+span:hover{
+    text-decoration: underline;
+}
+
+a{
+    color: grey;
+    text-decoration: none;
+}
+.has-error{
+    color: red;
+    border: 1px solid red;
+}
+.td:hover{
+    cursor: pointer;
+    background-color: #e6e6e6  ;
+}
+.red{
+    color:#780000;
+    font-weight: bold;
+}
+.spantab{
+    font-size: 150%;
+    text-decoration: underline;
+}
+.spantab1{
+    font-size: 150%;
+    text-decoration: underline;
+}
+.table-striped{
+    margin-top:2%;
+}
