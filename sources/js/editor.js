@@ -12,7 +12,7 @@ var js_editor = CodeMirror.fromTextArea(js_textarea, {
 var w = $(window).width();
 var h = $(window).height();
 var width= (w/3); // dovrà dare 1280/2
-js_editor.setSize(width, 400);
+js_editor.setSize(width, 350);
 
 
 
@@ -93,7 +93,7 @@ var css_editor = CodeMirror.fromTextArea(css_textarea, {
 	theme: "default",
 	readOnly: false
 });
-css_editor.setSize(width, 400); // width al posto di 600 
+css_editor.setSize(width, 350); // width al posto di 600 
 
 
 

@@ -297,14 +297,116 @@
 	    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div id="main" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-					<div id="chart"></div>
+					<div id="chart" class="hide"></div>
 				</div>
 				<div id="sidebar">
 				</div>
 		    	<div id="document" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
 		    </div>
 		</div>
-		<div class="panel panel-default">
+
+		<!-- Inizio Tab-->
+		<div id="features" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:-30px;">
+			<div>
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="active" role="presentation">
+						<a data-toggle="tab" role="tab" aria-controls="ediTab" href="#ediTab" style="color:grey; text-decoration:none; font-size:120%;">Edit Rules</a>
+					</li>
+					<li role="presentation">
+						<a id="tabDocuments" data-toggle="tab" role="tab" aria-controls="navTab" href="#navTab" style="color:grey; text-decoration:none; font-size:120%;">Nav Rules</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div id="navTab" class="tab-pane" role="tabpanel">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="nr_bot" style="margin-top:5%;">
+							<div style="margin-top:10px;" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" ><span class="glyphicon glyphicon-chevron-left col-md-1 col-lg-1"></span><div id="navigate_rule_close_bot" class="col-md-3 col-lg-3"><select id="seltit"></select></div><span class="glyphicon glyphicon-chevron-right text-right col-md-2 col-lg-2"></span></div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-right"><button id="id_rules" onclick="load_rules()" class="btn btn-default doco_go">load</button></div>
+						</div><br>
+						<div id="info_rules" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:350px;">
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="margin-top:2%; padding:15px; border:1px solid black; border-radius:5px;">
+								<div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
+									<label class="col-md-4 col-lg-4 control-label" for="spantitle">Title:</label>
+									<div class="col-md-8 col-lg-8">
+										<span name ="spantitle" id="spantitle" class=""></span>
+									</div>
+								</div><div class="col-md-4 col-lg-4"></div>
+								<div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
+									<label class="col-md-4 col-lg-4 control-label" for="spanauth">Author:</label>
+									<div class="col-md-8 col-lg-8">
+										<span name="spanauth" id="spanauth" class=""></span>
+									</div>
+								</div><div class="col-md-4 col-lg-4"></div>
+								<div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
+									<label class="col-md-4 col-lg-4  control-label" for="spandesc">Description:</label>
+									<div class="col-md-8 col-lg-8">
+										<span name="spandesc" id="spandesc" class=""></span>
+									</div>
+									<div class="col-md-8 col-lg-8 hide">
+										<span name="spanjs" id="spanjs" class=""></span>
+									</div>
+									<div class="col-md-8 col-lg-8 hide">
+										<span name="spancss" id="spancss" class=""></span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-lg-6 text-right">
+								<button id="mc" class="btn btn-default" value="copy" style="margin-top:24%;" data-toggle="modal" data-target="#copyModal">Make a copy</button>
+							</div>
+						</div>
+					</div>
+					<div id="ediTab" class="tab-pane active" role="tabpanel">
+						<div id="doco_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
+					    	<div >
+								<!-- <input id="doco_go" type="submit" value="evaluate" class="hide"> -->
+					    		<input id="doco_reset" type="reset" value="reset" class="hide">
+								<div style="display: inline; float: right;" class="hide">
+									<label for="js_example">Load an example: </label>
+									<select name="js_example" id="js_example">
+										<option value="doco_code" id="doco_code">DoCO structures</option>
+										<option value="biblioref_code" id="biblioref_code" selected="selected">Bilbiographic references</option>
+										<option value="para_length_code" id="para_length_code">Paragraph length</option>
+										<option value="uk_vs_usa_code" id="uk_vs_usa_code">UK vs. USA English</option>
+									</select>
+								</div>
+								<div id="editor_container" clss="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+									<textarea id="js_editor" rows="40" cols="30"></textarea>
+								<!-- </div> -->
+
+				<!--
+									var sections = $("div.section");
+									var filtered = sections.filter(function() {
+										return ( $(this).children(".title").length != 0);
+									});
+									filtered.each(function() {
+									  var eid = getStructuralClass( $(this).attr("class") );
+									  $("path."+eid).attr("style", "fill: red");
+									});
+				-->
+									<textarea id="css_editor" rows="40" cols="50" class="text-right"></textarea>
+								</div>
+							</div>
+							<div id="but_rules" class="text-right">
+								<button class="btn btn-default" id="save_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#saveModal">save</button><br>
+								<button class="btn btn-default" id="create_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#createModal">create</button><br>
+								<!-- <button class="btn btn-default" id="preview_rule" style="margin-top:5%; width:100px;">preview</button> -->
+								<input class="doco_go" type="submit" value="preview" style="margin-top:5%; width:100px; padding:10px; border-radius:4px;">
+							</div>
+							<div id="info_create" class="text-right hide">
+
+							</div>
+							<div id="button_create" class="text-right hide">
+								<button id='modify_create' class='btn btn-default' data-toggle='modal' data-target='#createModal'>Modify</button>
+								<button id="create_last" class="btn btn-default">Create</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Inizio pannelli-->
+		<!-- <div class="panel panel-default">
 			<div class="panel-heading" role="tab" id="headingTwo">
 				<h4 class="panel-title">
 					<a id="collapse_nr" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" >
@@ -355,8 +457,12 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="panel panel-default">
+		</div> -->
+
+
+
+
+		<!-- <div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="headingOne" style="height:50px;">
 		      <h4 class="panel-title">
 		        <a id="collapse_er" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -367,9 +473,9 @@
 		    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 		      <div class="panel-body">
 		      	<div id="doco_container" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			    	<div >
-						<!-- <input id="doco_go" type="submit" value="evaluate" class="hide"> -->
-			    		<input id="doco_reset" type="reset" value="reset" class="hide">
+			    	<div > -->
+						<!-- <input id="doco_go" type="submit" value="evaluate" class="hide"> ERA GIA HIDE--> 
+			    		<!-- <input id="doco_reset" type="reset" value="reset" class="hide">
 						<div style="display: inline; float: right;" class="hide">
 							<label for="js_example">Load an example: </label>
 							<select name="js_example" id="js_example">
@@ -380,8 +486,8 @@
 							</select>
 						</div>
 						<div id="editor_container" clss="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<textarea id="js_editor" rows="40" cols="30"></textarea>
-						<!-- </div> -->
+							<textarea id="js_editor" rows="40" cols="30"></textarea> -->
+						<!-- </div> DA QUI ERA HIDE -->
 
 		<!--
 							var sections = $("div.section");
@@ -392,15 +498,15 @@
 							  var eid = getStructuralClass( $(this).attr("class") );
 							  $("path."+eid).attr("style", "fill: red");
 							});
-		-->
-							<textarea id="css_editor" rows="40" cols="50" class="text-right"></textarea>
+		FINO A QUI ERA HIDE-->
+							<!-- <textarea id="css_editor" rows="40" cols="50" class="text-right"></textarea>
 						</div>
 					</div>
 					<div id="but_rules" class="text-right">
 						<button class="btn btn-default" id="save_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#saveModal">save</button><br>
-						<button class="btn btn-default" id="create_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#createModal">create</button><br>
-						<!-- <button class="btn btn-default" id="preview_rule" style="margin-top:5%; width:100px;">preview</button> -->
-						<input class="doco_go" type="submit" value="preview" style="margin-top:5%; width:100px; padding:10px; border-radius:4px;">
+						<button class="btn btn-default" id="create_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#createModal">create</button><br> -->
+						<!-- <button class="btn btn-default" id="preview_rule" style="margin-top:5%; width:100px;">preview</button> ERA GIA HIDE-->
+						<!-- <input class="doco_go" type="submit" value="preview" style="margin-top:5%; width:100px; padding:10px; border-radius:4px;">
 					</div>
 					<div id="info_create" class="text-right hide">
 
@@ -411,7 +517,7 @@
 					</div>
 				</div>
 		      </div>
-		    </div>
+		    </div> -->
 	  	</div>
 		<script type="text/javascript" src="js/init_param.js"></script> 
     	<script type="text/javascript" src="js/draw.js"></script> 

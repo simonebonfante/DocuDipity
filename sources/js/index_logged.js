@@ -13,7 +13,6 @@ $(document).ready(function(){
 	initialization_rule();
 	initialization_doc();
 	// logout();
-
 });
 
 var idx=0;
@@ -282,10 +281,32 @@ function initialization_rule(){
 			if(($("#op_"+i).val())==curr_rule){
 				idx=i;
 				$("#op_"+i).prop('selected', true);
-				alert($("#op_"+i).val());
+				// alert($("#op_"+i).val());
 			}
 		}
+		//First Evaluation
+		setTimeout(function() { first_eval(); }, 1500);
 	}
+}
+function first_eval(){
+	var count;
+	for(var i=0; i<vettore_regole.length; i++){
+		if(vettore_regole[i]["title"]==curr_rule){
+			count=i;
+			i=vettore_regole.length;
+		}
+	}
+	$("#chart").removeClass("hide");
+
+	var css_text=vettore_regole[count]["css"];
+	$('head').append('<style type="text/css" id="css_included">' + css_text + '</style>');
+	var doco_text = vettore_regole[count]["js"];
+	eval("function draw_doco() {"+ doco_text + "} draw_doco();	");
+
+	var docosel = $("classeddocument [class*=' doco-']");
+	docosel.each(function() {
+		addClassToPath( $(this) );
+	});
 }
 
 function initialization_doc(){

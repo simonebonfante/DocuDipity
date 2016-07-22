@@ -1,7 +1,9 @@
 var editor_xmlclassed = "http://localhost/vis/DoCoFromPatterns/data/xmlclassed/";
 
 // Dimensions of sunburst.
-var height = 600;
+var height = $(window).height();
+height=(height/3)*2;
+$("#document").css("height",height);
 var w= $( window ).width();
 var w1=w/2;
 var width = w;
@@ -48,7 +50,7 @@ var mainChart = d3.select("#chart").append("svg:svg")
 var vis = mainChart
 			.append("svg:g")
 			.attr("id", "container")
-			.attr("transform", "translate(280,280)"); // + width / 2 + "," + ((height/2)-40)  + ")");
+			.attr("transform", "translate(280,200)"); // + width / 2 + "," + ((height/2)-40)  + ")");
 
 var partition = d3.layout.partition()
 					//.size([ 2 * Math.PI, radius * radius ])
