@@ -106,6 +106,10 @@ function load_rules_base(){
 	// setTimeout(function() { evaluateJs(); }, delayDraw);
 }
 function load_rules(){
+	$("#navTab").removeClass("active");
+	$("#navact").removeClass("active");
+	$("#ediTab").addClass("active");
+	$("#editact").addClass("active");
 	var js_code = vettore_regole[idx]["js"];
 	var css_code = vettore_regole[idx]["css"];
 	js_editor.setValue(js_code);

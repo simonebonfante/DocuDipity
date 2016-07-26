@@ -309,10 +309,10 @@
 		<div id="features" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:-30px;">
 			<div>
 				<ul class="nav nav-tabs" role="tablist">
-					<li class="active" role="presentation">
+					<li id="editact" class="active" role="presentation">
 						<a data-toggle="tab" role="tab" aria-controls="ediTab" href="#ediTab" style="color:grey; text-decoration:none; font-size:120%;">Edit Rules</a>
 					</li>
-					<li role="presentation">
+					<li id="navact" role="presentation">
 						<a id="tabDocuments" data-toggle="tab" role="tab" aria-controls="navTab" href="#navTab" style="color:grey; text-decoration:none; font-size:120%;">Nav Rules</a>
 					</li>
 				</ul>

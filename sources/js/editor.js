@@ -28,7 +28,7 @@ $("#nextdoc").on("click", function() {
 
 });
 
-$(".doco_go").on("click", function() {
+$(".doco_go").on("click", function() {	
 	evaluateJs();
 });
 
