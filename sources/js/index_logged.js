@@ -20,6 +20,7 @@ var titledocs=[];
 var groupdocs=[];
 
 
+
 function change_idx_rul(){
 	$(".glyphicon-chevron-right").on("click",function(){
 		var selectedTit = $('select#seltit').find(":selected").next();
