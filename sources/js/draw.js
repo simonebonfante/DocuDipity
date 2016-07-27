@@ -285,7 +285,7 @@ function drawVisualization(json, doInitialization) {
 								return d.pattern + " " + d.xmlId;
 							})
 							.style("fill", function(d) {
-								return colorsPattern[d.pattern].color;
+								return "grey";
 							})
 							.style("opacity", 1)
 							.on("mouseover", mouseover)
@@ -511,7 +511,7 @@ function updateBreadcrumbs(d) {
 	entering.append("svg:polygon")
 				.attr("points", breadcrumbPoints)
 				.style("fill", function(d) {
-					return colorsPattern[d.pattern].color;
+					return "grey";
 				});
 
 	entering.append("svg:text")
@@ -580,7 +580,7 @@ function drawLegend() {
 		.attr("ry", li.r)
 		.attr("width", li.w)
 		.attr("height", li.h).style("fill", function(d) {
-			return d.value.color;
+			return "grey";
 		});
 	
 	g.append("svg:text")
