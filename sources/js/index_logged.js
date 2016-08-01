@@ -119,6 +119,12 @@ function load_rules(){
 		var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
 	}
+	if(user==vettore_regole[idx]["author"]){
+		$("#save_rule").attr("data-target","#saveModal1");
+	}else{
+		$("#save_rule").attr("data-target","#saveModal");
+	}
+
 	// setTimeout(function() { evaluateJs(); }, delayDraw);
 
 }
@@ -239,16 +245,32 @@ function create_rule(){
     });
 }
 
+
 function presave(){
 	$("#save_rule").on("click", function(){
 		var jscode=js_editor.getValue();
 		var csscode=css_editor.getValue();
-		save(jscode, csscode);
+		if(user!=vettore_regole[idx]["author"]){
+			save(jscode, csscode);
+		}else if(user==vettore_regole[idx]["author"]){
+			$("#savetitle1").empty();
+			$("#saveauth1").empty();
+			$("#savedesc1").empty();
+			$("#savestatus1").empty();
+			$("#saveid1").empty();
+
+			$("#savetitle1").append(vettore_regole[idx]["title"]);
+			$("#saveauth1").append(vettore_regole[idx]["author"]);
+			$("#savedesc1").append(vettore_regole[idx]["description"]);
+			$("#savestatus1").append(vettore_regole[idx]["status"]);
+			$("#saveid1").append(vettore_regole[idx]["id"]);
+			save1(jscode,csscode);
+		}
+
 	});
 }
 
 function save(jscode, csscode){
-	alert(jscode);
 	$("#saveauthor").attr("value",user);
 	// var jsedt=jseditor.getValue();s
 	/* attach a submit handler to the form */
@@ -269,10 +291,34 @@ function save(jscode, csscode){
 	      /* Alerts the results */
 	      posting1.done(function( data1 ) {
 	      	alert(data1);
-	      	window.location.href = data1; 
+
+	      	window.location.href = data1;
 	      });
       });
     });
+}
+
+function save1(jscode, csscode){
+	alert(vettore_regole[idx]["title"]);
+	// var jsedt=jseditor.getValue();s
+	/* attach a submit handler to the form */
+    $("#save1").submit(function(event) {
+
+      /* stop form from submitting normally */
+      event.preventDefault();
+
+      /* get the action attribute from the <form action=""> element */
+      var $form = $( this ),
+          url1 = $form.attr( 'action' );
+      	  /* Send the data using post with element id name and name2*/
+      var posting1 = $.post( url1, { title: $('#savetitle1').text(), description: $('#savedesc1').text(), status: $('#savestatus1').text(), js: jscode, css: csscode, author: user } );
+
+      /* Alerts the results */
+      posting1.done(function( data1 ) {
+      	alert("index.php?doc=a&rule="+$('#savetitle1').text()+"?pass=0");
+      	window.location.href = data1; 
+      });
+  });
 }
 
 function initialization_rule(){
@@ -290,7 +336,7 @@ function initialization_rule(){
 			}
 		}
 		//First Evaluation
-		setTimeout(function() { first_eval(); }, 1500);
+		setTimeout(function() { first_eval(); }, 2000);
 	}
 }
 function first_eval(){
@@ -301,8 +347,6 @@ function first_eval(){
 			i=vettore_regole.length;
 		}
 	}
-	$("#chart").removeClass("hide");
-
 	var css_text=vettore_regole[count]["css"];
 	$('head').append('<style type="text/css" id="css_included">' + css_text + '</style>');
 	var doco_text = vettore_regole[count]["js"];

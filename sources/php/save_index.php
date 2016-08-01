@@ -10,7 +10,6 @@
     $description=$_POST["description"];
     $js=$_POST["js"];
     $css=$_POST["css"];
-    $id=$_POST["id"];
     $author=$_POST["author"];
 
     if($radio=="private"){
@@ -25,7 +24,19 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    
+    $stmt2= "SELECT id FROM rules";
+    $result = $conn->query($stmt2);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        $j=0;
+        while($row = $result->fetch_assoc()) {
+            $j++;
+        }
+    } else {
+        echo "0 results";
+    }
+    $id=$j;
 
     $stmt = $conn->prepare("INSERT INTO rules (js, css, title, id, status, description, author) VALUES (?, ?, ?, ?, ?, ?, ?)");
     if ( false===$stmt ) {

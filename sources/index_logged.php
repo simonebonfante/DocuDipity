@@ -199,7 +199,7 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h3 class="modal-title" id="myModalLabel" style="color:black;">Save</h3>
 		      </div>
-		      <form id="save" method="post" name="save" action="php/save_index.php">
+		      <form class="save" id="save" method="post" name="save" action="php/save_index.php">
 			      <div class="modal-body" >
 			      	<!-- <span style="font-family:'futura';">Questa modalit&agrave ti permette di salvare la regola corrente facendone una copia tua con le modifiche effettuate.<br>Sei sicuto di voler salvare?</span><br><br> -->
 			      	<div class="form-group">
@@ -228,6 +228,52 @@
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			        <button type="submit" name="Submit" value="save" class="btn btn-primary">Save</button>
+			      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+
+		<!--Save 1-->
+		<div class="modal fade" id="saveModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class="modal-title" id="myModalLabel" style="color:black;">Save</h3>
+		      </div>
+		      <form class="save" id="save1" method="post" name="save1" action="php/upload_index.php">
+			      <div class="modal-body" >
+			      	<!-- <span style="font-family:'futura';">Questa modalit&agrave ti permette di salvare la regola corrente facendone una copia tua con le modifiche effettuate.<br>Sei sicuto di voler salvare?</span><br><br> -->
+			      	<div class="form-group">
+						<label class="control-label" for="savetitle1">Title:</label>
+						<div class="">
+							<span id="savetitle1" class=""></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class=" control-label" for="saveauth1">Author:</label>
+						<div class="">
+							<span id="saveauth1" class=""></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class=" control-label" for="savedesc1">Description:</label>
+						<div class="">
+							<span id="savedesc1" class=""></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class=" control-label" for="savestatus1">Status:</label>
+						<div class="">
+							<span id="savestatus1" class=""></span>
+							<span id="saveid1" class="hide"></span>
+						</div>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="submit" name="Submit1" value="save1" class="btn btn-primary">Save</button>
 			      </div>
 		      </form>
 		    </div>
@@ -297,7 +343,10 @@
 	    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div id="main" class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-					<div id="chart" class="hide"></div>
+					<div id="chart" >
+						
+					</div>
+					<div class="col-xs-1 col-md-1 col-sm-1 col-lg-1 " style="font-size:120%; float:right;"><span class="glyphicon glyphicon-arrow-down"></span></div>
 				</div>
 				<div id="sidebar">
 				</div>
@@ -385,7 +434,7 @@
 								</div>
 							</div>
 							<div id="but_rules" class="text-right">
-								<button class="btn btn-default" id="save_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#saveModal">save</button><br>
+								<button class="btn btn-default" id="save_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#saveModal1">save</button><br>
 								<button class="btn btn-default" id="create_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#createModal">create</button><br>
 								<!-- <button class="btn btn-default" id="preview_rule" style="margin-top:5%; width:100px;">preview</button> -->
 								<input class="doco_go" type="submit" value="preview" style="margin-top:5%; width:100px; padding:10px; border-radius:4px;">
