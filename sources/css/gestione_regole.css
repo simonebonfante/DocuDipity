@@ -68,9 +68,6 @@
 .sel{
     text-decoration: underline;
 }
-#maincontent{
-    margin-top:60px;
-}
 span{
     font-size: 120%;
     cursor: pointer;

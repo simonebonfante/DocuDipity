@@ -31,7 +31,7 @@
       // header('refresh: 3; url = /gestione_regole.php');
       echo "Failed to connect";
     }
-   $stmt2= "SELECT id FROM rules";
+    $stmt2= "SELECT id FROM rules";
     $result = $conn->query($stmt2);
 
     if ($result->num_rows > 0) {
@@ -44,18 +44,34 @@
         echo "0 results";
     }
     $id=$j;
-    $stmt = $conn->prepare("INSERT INTO rules (js, css, title, author, id, status, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    if ( false===$stmt ) {
-      header('refresh: 3; url = ../index.php');
-      echo "Failed to prepare the query";    
+    $count_tit=0;
+    $stmt3= "SELECT * FROM rules WHERE title='".$title."'";
+    $result2 = $conn->query($stmt3);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while($row = $result2->fetch_assoc()) {
+            $count_tit++;
+        }
     }
-    $stmt->bind_param('ssssdds', $js, $css, $title, $author, $id, $status, $description);
-    if (!$stmt->execute()) {
-        header("refresh: 2; url=../index.php");
-        echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+
+    if ($count_tit>0){
+        echo "titolo esistente";
     }
-    header('refresh: 2; url = ../index.php');
-    echo "index_logged.php?doc=a&rule=".$title."&pass=0"; 
+    else{
+        $stmt = $conn->prepare("INSERT INTO rules (js, css, title, author, id, status, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        if ( false===$stmt ) {
+          header('refresh: 3; url = ../index.php');
+          echo "Failed to prepare the query";    
+        }
+        $stmt->bind_param('ssssdds', $js, $css, $title, $author, $id, $status, $description);
+        if (!$stmt->execute()) {
+            header("refresh: 2; url=../index.php");
+            echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+        }
+        header('refresh: 2; url = ../index.php');
+        echo "index_logged.php?doc=a&rule=".$title."&pass=0"; 
+        }
 
     $conn->close();
 

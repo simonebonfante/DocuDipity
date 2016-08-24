@@ -25,7 +25,7 @@
 	  echo "Failed to connect";
 	}
 
-	$sql = "SELECT id, author, title, status, description FROM rules";
+	$sql = "SELECT id, author, title, status, description, js, css FROM rules";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -37,6 +37,8 @@
 	        $vettore_regole[$j]["title"] = $row["title"];
 	        $vettore_regole[$j]["status"] = $row["status"];
 	        $vettore_regole[$j]["description"] = $row["description"];
+	        $vettore_regole[$j]["js"] = $row["js"];
+	        $vettore_regole[$j]["css"] = $row["css"];
 	        $j++;
 	    }
 	} else {
@@ -95,7 +97,7 @@
 		        </div><!-- /.navbar-collapse -->
 			</div>
 		</div>
-		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="features" style="border-right: 1px solid black; margin-top:10%;">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" id="features" style="border-right: 1px solid black; margin-top:10%; ">
 			<div>
 			  <!-- Nav tabs -->
 			  <ul class="nav nav-tabs" role="tablist">
@@ -190,7 +192,7 @@
 					</form>
 				</div>
 				<div id="main2" class="">
-					<form method="post" action="php/loadrules.php">
+					<form id="formaltre" method="post" action="php/loadrules.php">
 						<span class="spantab hide" id="spanaltre">Altre</span>
 						<table id="altre" class="table  table-striped hide">
 							<tr>
@@ -218,7 +220,7 @@
 							</tr>
 						</table>
 					</form>
-					<form method="post" action="php/loadrules.php">
+					<form id="formpriv" method="post" action="php/loadrules.php">
 						<span class="spantab hide" id="spanpriv">Mie Private</span>
 						<table id="miepriv" class="table  table-striped hide">
 							<tr>
@@ -232,13 +234,14 @@
 							</tr>
 						</table>
 					</form>
-					<form method="post" action="php/loadocs.php">
+					<form id="formdocs" method="post" action="php/loadocs.php">
 						<span class="spantab hide" id="spandoc">Documents</span>
 						<table id="tabdocs" class="table table-striped hide">
 							<tr>
 								<th>Title</th>
 								<th>Author</th>
 								<th>Group</th>
+								<th>Load</th>
 							</tr>
 						</table>
 					</form>

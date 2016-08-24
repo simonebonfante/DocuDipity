@@ -237,11 +237,13 @@
 					</table>
 				</form>
 				<form method="post" action="php/loadocs.php">
+					<span class="spantab hide" id="spandoc">Documents</span>
 					<table id="tabdocs" class="table table-striped hide">
 						<tr>
 							<th>Title</th>
 							<th>Author</th>
 							<th>Group</th>
+							<th>Load</th>
 						</tr>
 					</table>
 				</form>

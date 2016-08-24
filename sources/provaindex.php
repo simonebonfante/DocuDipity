@@ -1,15 +1,13 @@
 <?php
 	// Inizio la sessione
   	session_start();
-  	if (!isset($_SESSION['user'])){
-      	header("location:index.php");
+  	if (isset($_SESSION['user'])){
+      	header("location: index_logged.php?doc=a&rule=doco_code&pass=0");
   	}else{
   		$user = $_SESSION["user"];
   	}
   	$dir    = 'data/xml';
-  	$dir_json='data/json';
 	$files1 = scandir($dir);
-	$file_json = scandir($dir_json);
 	$files2 = scandir($dir, 1);
 	include "php/config_db.php";
 	$host=$_SESSION["host"]; // Host name 
@@ -84,7 +82,6 @@
 		<script type="text/javascript">var user = <?php echo json_encode($user); ?></script>
 		<script type="text/javascript">var vettore_regole = <?php echo json_encode($vettore_regole); ?></script>
 		<script type="text/javascript">var docs = <?php echo json_encode($files1); ?></script>
-		<script type="text/javascript">var docs_json = <?php echo json_encode($file_json); ?></script>
 		<script type="text/javascript">var curr_doc = <?php echo json_encode($curr_document); ?></script>
 		<script type="text/javascript">var curr_rule = <?php echo json_encode($curr_rule); ?></script>
 		<script type="text/javascript">var passage = <?php echo json_encode($passage); ?></script>
@@ -93,190 +90,65 @@
 
 	</head>
 	<body>
-	<!-- Modal Sign up-->
-		<div class="modal fade" id="copyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="myModalLabel">Make a copy</h4>
-		      </div>
-		      <!-- <div name="copy">
-			      <div class="modal-body">
-			      	<div class="form-group">
-						<label for="titlecpy">Title</label>
-						<input id="titlecpy" value="" name="titlecpy"></input>
-					</div>
-			      	<div class="form-group">
-						<label for="jscpy">Js</label>
-						<input id="jscpy" value="" name="jscpy"></input>
-					</div>
-					<div class="form-group">
-						<label for="csscpy">Css</label>
-						<input id="csscpy" value="" name="csscpy"></input>
-					</div>
-					<div class="form-group">
-						<label for="authcpy">Author</label>
-						<input id="authcpy" value="" name="authcpy"></input>
-					</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button id="makeacopy" class="btn btn-primary">Make a copy</button>
-			      </div>
-		      </div> -->
-		      <form id="copy" name ="copy" action="php/makeacopy.php" title="" method="post">
-		      	<div class="modal-body">
-			        <div class="form-group">
-			            <label for="titlecpy">Title</label>
-						<input id="titlecpy" value="" name="titlecpy"></input>
-			        </div>
-			        <div class="form-group">
-			            <label for="jscpy">Js</label>
-						<input id="jscpy" value="" name="jscpy"></input>
-			        </div>
-			        <div class="form-group">
-						<label for="csscpy">Css</label>
-						<input id="csscpy" value="" name="csscpy"></input>
-					</div>
-			        <div class="form-group">
-						<label for="authcpy">Author</label>
-						<input id="authcpy" value="" name="authcpy"></input>
-					</div>
-			        <div class="form-group">
-			            <input type="submit" id="submitButton"  name="submitButton" value="Submit">
-			    	</div>
-			    </div>
-			   <!--  <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button id="submitButton"  name="submitButton" value="Submit" type="submit" class="btn btn-primary">Make a copy</button>
-			    </div> -->
-		 	  </form>
-		    </div>
-		  </div>
-		</div>
 
-		<!-- Modal  Create-->
-		<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- Modal Sign up-->
+		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h3 class="modal-title" id="myModalLabel" style="color:black;">Create</h3>
+		        <h4 class="modal-title" id="myModalLabel">Sign up</h4>
 		      </div>
-		      <form id="create" method="post" name="create" action="php/create_index.php">
+		      <form method="post" id="signup" name="signup" action="php/signup.php">
 			      <div class="modal-body">
 			      	<div class="form-group">
-						<label for="cretitle">Title</label>
-						<input type="text" class="form-control" name="cretitle" id="cretitle" placeholder="Title">
+						<label for="signname">Name</label>
+						<input type="text" class="form-control" name="signname" id="signname" placeholder="Name">
+					</div>
+			      	<div class="form-group">
+						<label for="signmail">Email address</label>
+						<input type="email" class="form-control" name="signmail" id="signmail" placeholder="Email">
 					</div>
 					<div class="form-group">
-						<label for="credesc">Description</label>
-						<textarea id="credesc" class="form-control long" name="credesc" placeholder="Description.." type="description" rows="3"></textarea> 
+						<label for="signpassword">Password</label>
+						<input type="password" class="form-control" name="signpassword" id="signpassword" placeholder="Password">
 					</div>
 					<div class="form-group">
-						<label class="radio-inline">
-							<input type="radio" autocomplete="off" value="public" name="status">
-							Public
-						</label>
-						<label class="radio-inline">
-							<input type="radio" autocomplete="off" value="private" name="status">
-							Private
-						</label>
+						<label for="signrepassword">Re-password</label>
+						<input type="password" class="form-control" name="signrepassword" id="signrepassword" placeholder="Re-Password">
 					</div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button id="create" type="submit" name="Submit" value="create" class="btn btn-primary">Create</button>
+			        <button type="submit" name="Submit" value="signup" class="btn btn-primary">Sing up</button>
 			      </div>
 		      </form>
 		    </div>
 		  </div>
 		</div>
 		
-		<!--Save -->
-		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<!-- Modal  Login-->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h3 class="modal-title" id="myModalLabel" style="color:black;">Save</h3>
+		        <h4 class="modal-title" id="myModalLabel">Login</h4>
 		      </div>
-		      <form class="save" id="save" method="post" name="save" action="php/save_index.php">
-			      <div class="modal-body" >
-			      	<!-- <span style="font-family:'futura';">Questa modalit&agrave ti permette di salvare la regola corrente facendone una copia tua con le modifiche effettuate.<br>Sei sicuto di voler salvare?</span><br><br> -->
+		      <form id="login" method="post" name="login" action="php/checklogin_index.php">
+			      <div class="modal-body">
 			      	<div class="form-group">
-						<label for="savetitle">Title</label>
-						<input type="text" class="form-control" name="savetitle" id="savetitle" placeholder="Title">
-					</div>
-					<div class="form-group hide">
-						<label for="saveauthor">Author</label>
-						<input type="text" class="form-control" value="" name="saveauthor" id="saveauthor" placeholder="Author">
+						<label for="logmail">Email</label>
+						<input type="email" class="form-control" name="logmail" id="logmail" placeholder="Email">
 					</div>
 					<div class="form-group">
-						<label for="savedesc">Description</label>
-						<textarea id="savedesc" class="form-control long" name="savedesc" placeholder="Description.." type="description" rows="3"></textarea>
-					</div>
-			      	<div class="form-group">
-						<label class="radio-inline">
-							<input type="radio" autocomplete="off" value="public" name="status_save">
-							Public
-						</label>
-						<label class="radio-inline">
-							<input type="radio" autocomplete="off" value="private" name="status_save">
-							Private
-						</label>
+						<label for="logpassword">Password</label>
+						<input type="password" class="form-control" name="logpassword" id="logpassword" placeholder="Password">
 					</div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="submit" name="Submit" value="save" class="btn btn-primary">Save</button>
-			      </div>
-		      </form>
-		    </div>
-		  </div>
-		</div>
-
-		<!--Save 1-->
-		<div class="modal fade" id="saveModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h3 class="modal-title" id="myModalLabel" style="color:black;">Save</h3>
-		      </div>
-		      <form class="save" id="save1" method="post" name="save1" action="php/upload_index.php">
-			      <div class="modal-body" >
-			      	<!-- <span style="font-family:'futura';">Questa modalit&agrave ti permette di salvare la regola corrente facendone una copia tua con le modifiche effettuate.<br>Sei sicuto di voler salvare?</span><br><br> -->
-			      	<div class="form-group">
-						<label class="control-label" for="savetitle1">Title:</label>
-						<div class="">
-							<span id="savetitle1" class=""></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class=" control-label" for="saveauth1">Author:</label>
-						<div class="">
-							<span id="saveauth1" class=""></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class=" control-label" for="savedesc1">Description:</label>
-						<div class="">
-							<span id="savedesc1" class=""></span>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class=" control-label" for="savestatus1">Status:</label>
-						<div class="">
-							<span id="savestatus1" class=""></span>
-							<span id="saveid1" class="hide"></span>
-						</div>
-					</div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="submit" name="Submit1" value="save1" class="btn btn-primary">Save</button>
+			        <button type="submit" name="Submit" value="login" class="btn btn-primary">Login</button>
 			      </div>
 		      </form>
 		    </div>
@@ -291,18 +163,15 @@
 				<h1>Docudipity</h1>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right right">
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> <!-- Collect the content for toggling into 	the button when the size is too small-->
-		            <ul id="nav-destra" class="nav navbar-nav navbar-right">
-		                    <li class="dropdown"><a style="color:gray; text-decoration:none; font-size:120%;" class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="true"> Benvenuto, <b> <?php echo "$user" ?></b>! <span class="glyphicon glyphicon-menu-down"></span> </a><ul class="dropdown-menu" role="menu"> <li> <a href="about.html"> <span class=" glyphicon glyphicon-info-sign"></span> About</a> <li> <a href="php/logout_index.php"> <span class="glyphicon glyphicon-log-out"></span> Logout </a></ul></li>
-		            </ul>
-		        </div><!-- /.navbar-collapse -->
+				<button type="button" class="btn btn-default" id="login" data-toggle="modal" data-target="#loginModal">Login</button>
+				<button class="text-left btn btn-default" style="margin-left: 5px;" data-toggle="modal" data-target="#signupModal">Sign up</button>
 			</div>
 		</div>
 		<div class="panel-group" id="collapse_title" role="tablist" aria-multiselectable="true">
 			<div class="panel panel-default">
 			    <div class="panel-heading" role="tab" id="headingTre" style="height:30px;">
 			      <h4 class="panel-title">
-			        <a id="tabDocuments" class="collapsed" role="button" data-toggle="collapse" data-parent="#collapse_title" href="#collapseTre" aria-expanded="false" aria-controls="collapseTre">
+			        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#collapse_title" href="#collapseTre" aria-expanded="false" aria-controls="collapseTre">
 			          Group & title
 			        </a>
 			      </h4>
@@ -310,17 +179,16 @@
 			    <div id="collapseTre" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTre">
 			      <div class="panel-body">
 			        <div id="sez_docs" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
-						<div class="col-md-12 col-lg-12" id="doc_group">
-							<span class="glyphicon glyphicon-chevron-left col-md-2"></span>
-							<button class="col-md-1 btn btn-default" gr="" id="apply_group">load</button>
-							<span class="glyphicon glyphicon-chevron-right col-md-2"></span>
+						<div class="col-md-12 col-lg-12">
+							<span class="glyphicon glyphicon-chevron-left col-md-3"></span>
+							<button class="col-md-1 btn btn-default" id="apply_group">apply</button>
+							<span class="glyphicon glyphicon-chevron-right col-md-3"></span>
 							<span class="col-md-3" id="group"></span>
-							<span><input id="openxml" type="submit" value="open XML"></span>
 						</div>
-						<div class="col-md-12 col-lg-12" style="margin-top:5%;" id="doc_title">
-							<span class="glyphicon glyphicon-chevron-left col-md-2"></span>
-							<button class="col-md-1 btn btn-default" tl="" id="apply_title">apply</button>
-							<span class="glyphicon glyphicon-chevron-right col-md-2"></span>
+						<div class="col-md-12 col-lg-12" style="margin-top:5%;">
+							<span class="glyphicon glyphicon-chevron-left col-md-3"></span>
+							<button class="col-md-1 btn btn-default" id="apply_title">apply</button>
+							<span class="glyphicon glyphicon-chevron-right col-md-3"></span>
 							<span class="col-md-3" id="title"></span>
 						</div>
 					</div>
@@ -328,7 +196,7 @@
 			    </div>
 			</div>
 		</div>
-	    <div id="intro" style="text-align: center;" class="hide">
+	    <div id="intro" style="text-align: center;">
 	      <p>Pick a document: 
 			<select id='docSelection'>
 			  <?php
@@ -400,15 +268,6 @@
 										<span name="spancss" id="spancss" class=""></span>
 									</div>
 								</div>
-								<div class="form-group col-xs-8 col-sm-8 col-md-8 col-lg-8">
-									<label class="col-md-4 col-lg-4  control-label" for="spanstatus">Status:</label>
-									<div class="col-md-8 col-lg-8">
-										<span name="spanstatus" id="spanstatus" class=""></span>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-lg-6 text-right">
-								<button id="mc" class="btn btn-default" value="copy" style="margin-top:24%;" data-toggle="modal" data-target="#copyModal">Make a copy</button>
 							</div>
 						</div>
 					</div>
@@ -442,19 +301,6 @@
 				-->
 									<textarea id="css_editor" rows="40" cols="50" class="text-right"></textarea>
 								</div>
-							</div>
-							<div id="but_rules" class="text-right">
-								<button class="btn btn-default" id="save_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#saveModal1">save</button><br>
-								<button class="btn btn-default" id="create_rule" style="margin-top:5%; width:100px;" data-toggle="modal" data-target="#createModal">create</button><br>
-								<!-- <button class="btn btn-default" id="preview_rule" style="margin-top:5%; width:100px;">preview</button> -->
-								<input class="doco_go" type="submit" value="preview" style="margin-top:5%; width:100px; padding:10px; border-radius:4px;">
-							</div>
-							<div id="info_create" class="text-right hide">
-
-							</div>
-							<div id="button_create" class="text-right hide">
-								<button id='modify_create' class='btn btn-default' data-toggle='modal' data-target='#createModal'>Modify</button>
-								<button id="create_last" class="btn btn-default">Create</button>
 							</div>
 						</div>
 					</div>
@@ -581,7 +427,7 @@
     	<script type="text/javascript" src="js/draw.js"></script> 
     	<script type="text/javascript" src="js/editor.js"></script>
     	<script type='text/javascript' src='bootstrap/js/bootstrap.js'></script>
-    	<script type="text/javascript" src="js/index_logged.js"></script>
+    	<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 		// Hack to make this example display correctly in an iframe on bl.ocks.org
       		d3.select(self.frameElement).style("height", "700px");

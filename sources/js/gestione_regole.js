@@ -7,6 +7,7 @@ $(document).ready(function(){
 var flag=0;
 var titledocs=[];
 var groupdocs=[];
+var newgroupdocs=[];
 
 function pre_login(){
 	alert("devi prima effettuare il login");
@@ -55,12 +56,30 @@ function loadtitle(titolo,gruppo, i){
 	groupdocs[i]=gruppo;
 }
 function loadgroup(){
+	var newgroup=[];
+	var trovato=0;
+	var count=1;
 	$("#tabDocuments").on("click", function(){
-		for(var i=2; i<groupdocs.length-1; i++){
-			if(groupdocs[i]!=groupdocs[i+1]){
-				$("#tablegroups").append('<tr><td class="td group" gr="'+groupdocs[i]+'">'+groupdocs[i]+'</td></tr>');
-			}
+		newgroup[2]=groupdocs[2];
+		for(var j=3; j<groupdocs.length; j++){
+			newgroup[j]=0;
 		}
+		for(var t=3; t<groupdocs.length; t++){
+        	trovato=0;
+        	for (var h=2; h<groupdocs.length; h++){
+            	if(groupdocs[t]==newgroup[h]){
+                	trovato=1;
+            	}
+        	}if (trovato==0){
+            	newgroup[count]=groupdocs[t];
+            	count++;
+        	}
+    	}
+    	for (var k=2; k<newgroup.length; k++){
+    		if (newgroup[k]!=0){
+    			$("#tablegroups").append('<tr><td class="td group" gr="'+newgroup[k]+'">'+newgroup[k]+'</td></tr>');
+    		}	
+    	}
 		loadtable_doc();
 	});
 	function loadtable_doc(){
@@ -69,13 +88,16 @@ function loadgroup(){
 			$(".td").removeClass("red");
 			$(this).addClass("red");
 			$("#prerules").addClass("hide");
+			$("#spandoc").removeClass("hide");
 			$(".table-striped").addClass("hide");
 			$("#tabdocs").removeClass("hide");
 			$("#tabdocs").empty();
+			$("#tabdocs").append("<tr><th>Title</th><th>Author</th><th>Group</th></tr>");
 				for(var j=2; j<titledocs.length; j++){
 					if(g==groupdocs[j]){
 						$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="authd'+j+'"></td><td id="groupd'+j+'"></td></tr>');
 						$("#titd"+j).append(titledocs[j]);
+						$("#authd"+j).append("Simone");
 						$("#groupd"+j).append(groupdocs[j]);
 					}
 				}

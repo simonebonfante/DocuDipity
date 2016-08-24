@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	//url();
 	pass();
 	change_idx_rul(); // navigate rule closed
 	load_title_nc_top();  // navigate rule closed
@@ -8,17 +9,28 @@ $(document).ready(function(){
 	change_sel();
 	makecopy();
 	load_docs();
+	loadgroup();
 	create_rule();
 	presave();
+	save();
 	initialization_rule();
-	initialization_doc();
 	// logout();
 });
 
-var idx=0;
-var titledocs=[];
-var groupdocs=[];
 
+var idx=0;
+var id_group=2;
+var id_title=0;
+var titledocs_tmp=[];
+var titledocs=[];
+var url=[];
+var all_doc=[];  // in all_doc[0] c'è il titolo (tutto l'array titledocs), in all_doc[1] c'è l'url (tutto l'array url), in all_doc[2] c'è il gruppo (tutto l'array groupdocs) !!!
+var groupdocs=[];
+var newgroup=[];
+var newgroup1=[];
+var first=1;
+var jscode;
+var csscode;
 
 
 function change_idx_rul(){
@@ -56,15 +68,24 @@ function change_idx_rul(){
 }
 
 function load_title_nc_top(){
+	var status;
+	if (vettore_regole[idx]["status"]==0){
+		status="private";
+	}
+	else{
+		status="public";
+	}
 	$("#spantitle").empty();
 	$("#spanauth").empty();
 	$("#spandesc").empty();
+	$("#spanstatus").empty();
 	$("#spanjs").empty();
 	$("#spancss").empty();
 
 	$("#spantitle").append(vettore_regole[idx]["title"]);
 	$("#spanauth").append(vettore_regole[idx]["author"]);
 	$("#spandesc").append(vettore_regole[idx]["description"]);
+	$("#spanstatus").append(status);
 
 	//invisible
 	$("#spanjs").append(vettore_regole[idx]["js"]);
@@ -111,13 +132,37 @@ function load_rules(){
 	$("#navact").removeClass("active");
 	$("#ediTab").addClass("active");
 	$("#editact").addClass("active");
-	var js_code = vettore_regole[idx]["js"];
-	var css_code = vettore_regole[idx]["css"];
-	js_editor.setValue(js_code);
-	css_editor.setValue(css_code);
-	if(passage==0){
+	if ((passage==0)){
+		var js_code = vettore_regole[idx]["js"];
+		var css_code = vettore_regole[idx]["css"];
+		js_editor.setValue(js_code);
+		css_editor.setValue(css_code);
 		var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
+	}else if(passage==2){
+		var js_code = vettore_regole[idx]["js"];
+		var css_code = vettore_regole[idx]["css"];
+		js_editor.setValue(js_code);
+		css_editor.setValue(css_code);
+	}else if(passage==null){
+		var js_code = vettore_regole[idx]["js"];
+		var css_code = vettore_regole[idx]["css"];
+		js_editor.setValue(js_code);
+		css_editor.setValue(css_code);
+		var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		history.pushState('', 'New Page Title', newHREF);
+
+		setTimeout(function() { evaluateJs(); }, 2000);
+
+	}
+	else if(passage==1){
+		var js_code1 = "/** JAVASCRIPT EDITOR **/ ";
+		var css_code1 = "/** CSS EDITOR **/ ";
+		js_editor.setValue(js_code1);
+		css_editor.setValue(css_code1);
+	}
+	if(passage==0){
+		
 	}
 	if(user==vettore_regole[idx]["author"]){
 		$("#save_rule").attr("data-target","#saveModal1");
@@ -144,33 +189,153 @@ function getXml(data, i){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 	    if (xhttp.readyState == 4 && xhttp.status == 200) {
-	        getTilte(xhttp);
+	        getTilte(xhttp, data);
 	    }
 	};
 	xhttp.open("GET", "data/xml/"+data+"", true);
 	xhttp.send();
 
-	function getTilte(xml) {
+	function getTilte(xml, data) {
+		data=("data/json/"+data);
+		data=data.replace('.xml', '.json');
 	    var xmlDoc = xml.responseXML;
 	    var x = xmlDoc.getElementsByTagName('title')[0];
 	    var h = xmlDoc.getElementsByTagName('conftitle')[0];
 	    var t = h.childNodes[0];
 	    var y = x.childNodes[0];
-	    loadgroup(y.nodeValue, t.nodeValue, i);
+	    loadtitle(y.nodeValue, t.nodeValue, i, data);
 	}
 }
 
-function loadgroup(titolo,gruppo, i){
+function loadtitle(titolo,gruppo, i, data){
 	titledocs[i]=titolo;
 	groupdocs[i]=gruppo;
-	if(i==2){
-		$("#group").append(gruppo);
-		$("#title").append(titolo);
-	}
+	url[i]=data;
+
+	// if(i==2){
+	// 	$("#group").append(gruppo);
+	// 	$("#title").append(titolo);
+	// }
 }
-function loadtitle(){
-	for(var i=2; i<docs.length; i++){
+function loadgroup(){
+	var trovato=0;
+	var count=1;
+	$("#tabDocuments").on("click", function(){
+		all_doc[0]=titledocs;
+		all_doc[1]=url;
+		all_doc[2]=groupdocs;
+		newgroup[2]=all_doc[2][2];
+		for(var j=3; j<all_doc[2].length; j++){
+			newgroup[j]=0;
+		}
+		for(var t=3; t<all_doc[2].length; t++){
+        	trovato=0;
+        	for (var h=2; h<all_doc[2].length; h++){
+            	if(all_doc[2][t]==newgroup[h]){
+                	trovato=1;
+            	}
+        	}if (trovato==0){
+            	newgroup[count]=all_doc[2][t];
+            	count++;
+        	}
+    	}
+    	var count1=0;
+    	for (var k=2; k<newgroup.length; k++){
+    		if (newgroup[k]!=0){
+    			//$("#tablegroups").append('<tr><td class="td group" gr="'+newgroup[k]+'">'+newgroup[k]+'</td></tr>');
+    			newgroup1[count1]=newgroup[k];
+    			count1++;
+    		}	
+    	}
+    	initialization_doc();
+	});
+
+	function initialization_doc(){
+		var idtit=0;
+		id_title=0;
+		var g=newgroup[id_group];
+		for(var j=2; j<all_doc[0].length; j++){
+			if(g==all_doc[2][j]){
+				titledocs_tmp[idtit]=all_doc[0][j];
+				idtit++;
+			}
+		}
+		//initialization
+		if(first==1){
+			$("#group").append(newgroup[id_group]);
+			$("#apply_group").attr("gr",newgroup[id_group]);
+			$("#title").append(titledocs_tmp[id_title]);
+			$("#apply_title").attr("tl", titledocs_tmp[id_title]);
+			first=0;
+		}
+
+
+		$("#doc_group .glyphicon-chevron-right").on("click", function(){
+			if(id_group==(newgroup1.length-1)){
+				id_group=0;
+			}
+			else{
+				id_group++;
+			}
+			$("#group").empty();
+			$("#apply_group").attr("gr",newgroup1[id_group]);
+			$("#group").append(newgroup1[id_group]);
+		});
+		$("#doc_group .glyphicon-chevron-left").on("click", function(){
+			if(id_group==0){
+				id_group=newgroup1.length-1;
+			}
+			else{
+				id_group--;
+			}
+			$("#group").empty();
+			$("#apply_group").attr("gr",newgroup1[id_group]);
+			$("#group").append(newgroup1[id_group]);
+		});
 	}
+
+
+	//apply documents by groups 
+
+
+	$("#apply_group").on("click", function(){
+		id_title=0;
+		var idtit_tmp=0;
+		var g=$(this).attr("gr");
+		for(var j=2; j<all_doc[0].length; j++){
+			if(g==all_doc[2][j]){
+				titledocs_tmp[idtit_tmp]=all_doc[0][j];
+				idtit_tmp++;
+			}
+		}
+		$("#title").empty();
+		$("#apply_title").attr("tl", titledocs_tmp[id_title]);
+		$("#title").append(titledocs_tmp[id_title]);
+	});
+
+	$("#apply_title").on("click", function(){
+		for(var i=2; i<all_doc[0].length; i++){
+			if(($("#apply_title").attr("tl"))==all_doc[0][i]){
+				newUpdateDocument(all_doc[1][i]);
+
+				setTimeout(function() { evaluateJs(); }, 2000);
+			}
+		}
+	});
+}
+
+function newUpdateDocument(urlFile){
+	d3.json(urlFile, function(json) {
+		console.log(json);
+		drawVisualization(json[0], false);
+	});
+	
+	$("#document").load(urlFile.replace('/json/', '/htmlsubtree/').replace('.json', '.xml'), updateText);
+	
+	// carico xmlclassed per editor patternfinder
+	// new FPOGGI
+	$("#xmlclassed").load( urlFile.replace('/json/', '/xmlclassed/').replace('.json', '.xml') );
+	//$("#xmlclassed").load( urlFile.replace('/json/', '/xmlclassed/').replace('.json', '.xml'), evaluateJs());
 }
 
 function makecopy(){
@@ -210,7 +375,7 @@ function makecopy(){
 function create_rule(){
 	/* attach a submit handler to the form */
     $("#create").submit(function(event) {
-      alert("aspetta");
+      $("#createModal").modal('hide');
 
       $("#but_rules").addClass("hide");
       $("#info_create").removeClass("hide");
@@ -238,8 +403,11 @@ function create_rule(){
 
 	      /* Alerts the results */
 	      posting.done(function( data ) {
-	      	alert(data);
-	      	window.location.href = data;
+	      	if (data != "titolo esistente"){
+	      		window.location.href = data;
+	      	}else{
+	      		alert(data);
+	      	}
 	      });
 	  });
     });
@@ -248,10 +416,10 @@ function create_rule(){
 
 function presave(){
 	$("#save_rule").on("click", function(){
-		var jscode=js_editor.getValue();
-		var csscode=css_editor.getValue();
+		jscode=js_editor.getValue();
+		csscode=css_editor.getValue();
 		if(user!=vettore_regole[idx]["author"]){
-			save(jscode, csscode);
+			//save(jscode, csscode);
 		}else if(user==vettore_regole[idx]["author"]){
 			$("#savetitle1").empty();
 			$("#saveauth1").empty();
@@ -270,7 +438,7 @@ function presave(){
 	});
 }
 
-function save(jscode, csscode){
+function save(){
 	$("#saveauthor").attr("value",user);
 	// var jsedt=jseditor.getValue();s
 	/* attach a submit handler to the form */
@@ -290,8 +458,6 @@ function save(jscode, csscode){
 
 	      /* Alerts the results */
 	      posting1.done(function( data1 ) {
-	      	alert(data1);
-
 	      	window.location.href = data1;
 	      });
       });
@@ -299,7 +465,6 @@ function save(jscode, csscode){
 }
 
 function save1(jscode, csscode){
-	alert(vettore_regole[idx]["title"]);
 	// var jsedt=jseditor.getValue();s
 	/* attach a submit handler to the form */
     $("#save1").submit(function(event) {
@@ -315,14 +480,14 @@ function save1(jscode, csscode){
 
       /* Alerts the results */
       posting1.done(function( data1 ) {
-      	alert("index.php?doc=a&rule="+$('#savetitle1').text()+"?pass=0");
-      	window.location.href = data1; 
+      	alert(data1)
+      	window.location.href =  data1;
       });
   });
 }
 
 function initialization_rule(){
-	if(passage=="0"){
+	if((passage=="0")||(passage=="2")){
 		for(var i=0; i<vettore_regole.length; i++){	
 			if (curr_rule==vettore_regole[i]["title"]){
 				idx=i;
@@ -350,7 +515,7 @@ function first_eval(){
 	var css_text=vettore_regole[count]["css"];
 	$('head').append('<style type="text/css" id="css_included">' + css_text + '</style>');
 	var doco_text = vettore_regole[count]["js"];
-	eval("function draw_doco() {"+ doco_text + "} draw_doco();	");
+	eval("function draw_doco() { try{"+ doco_text + "} catch (e) { if (e instanceof TypeError) { alert(e); } else if (e instanceof RangeError) { alert(e); } else if (e instanceof SyntaxError) { alert(e); } else if (e instanceof EvalError) { alert(e); } else { alert(e);} }} draw_doco();	");
 
 	var docosel = $("classeddocument [class*=' doco-']");
 	docosel.each(function() {
@@ -358,9 +523,6 @@ function first_eval(){
 	});
 }
 
-function initialization_doc(){
-	
-}
 
 function pass(){
 	if (passage=="1"){
@@ -370,7 +532,6 @@ function pass(){
 		/* stop form from submitting normally */
 		$("#info_create").empty();
 		$("#info_create").append("<span><b>Title: </b>"+curr_rule+"</span><br><br><span><b>Author: </b>"+user+"</span><br><br><span><b>Description: </b>"+desc+"</span><br><br><span><b>Status: </b>"+status_pass+"</span><br><br>");
-
 		js_editor.setValue("/** JAVASCRIPT EDITOR **/ ");
 		css_editor.setValue("/** CSS EDITOR **/ ");
 
@@ -396,4 +557,14 @@ function pass(){
 			});
 		});
 	}
+}
+
+function url(){
+	var js_code = vettore_regole[idx]["js"];
+	var css_code = vettore_regole[idx]["css"];
+	js_editor.setValue(js_code);
+	css_editor.setValue(css_code);
+	var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
+	history.pushState('', 'New Page Title', newHREF);
+
 }

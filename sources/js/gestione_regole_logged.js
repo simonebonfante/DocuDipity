@@ -6,8 +6,13 @@ $(document).ready(function(){
     getfilename();
     loadgroup();
     create_passage();
-    edit();
+    editpub();
+    editpriv();
+    editaltre();
+    loaddoc();
 });
+
+
 
 var flag_altre=0;
 var flag_pub=0;
@@ -41,6 +46,7 @@ function getXml(data, i){
 function loadtitle(titolo,gruppo, i){
 	titledocs[i]=titolo;
 	groupdocs[i]=gruppo;
+	console.log(gruppo);
 }
 
 function pre_create(){
@@ -103,6 +109,7 @@ function create_passage(){
 
 function loadtable_altre(){
 	$("#altrerules").on("click", function(){
+		var statustmp;
 		$(".td").removeClass("red");
 		$(this).addClass("red");
 		$("#prerules").addClass("hide");
@@ -114,13 +121,16 @@ function loadtable_altre(){
 		$("#altre").removeClass("hide");
 		if(flag_altre==0){
 			for(var j=0; j<vettore_regole.length; j++){
-				$("#altre").append('<tr><td id="tit'+j+'"></td><td id="auth'+j+'"></td><td id="desc'+j+'"><td id="stat'+j+'"></td></td><td id="edit'+j+'"><button class="btn btn-default">edit</button></td><td id="dup'+j+'"><button class="btn btn-default">duplicate</button></td><td id="del'+j+'"></td></tr>');
+				if((vettore_regole[j]["author"]!=user)&&(vettore_regole[j]["status"]!=0)){
+					$("#altre").append('<tr><td id="tit'+j+'"></td><td id="auth'+j+'"></td><td id="desc'+j+'"><td id="stat'+j+'"></td></td><td id="edit'+j+'"><button class="btn btn-default edit" idx="'+vettore_regole[j]["id"]+'" type="submit" name="Submit">edit</button></td><td id="dup'+j+'"><button class="btn btn-default duplicate" idx="'+vettore_regole[j]["id"]+'">duplicate</button></td><td id="del'+j+'"></td></tr>');
+				}
 			}
 			for(var i=0; i<vettore_regole.length; i++){
-				$("#tit"+i).append(vettore_regole[i]["title"]);
-				$("#auth"+i).append(vettore_regole[i]["author"]);
-				$("#desc"+i).append(vettore_regole[i]["description"]);
-				$("#stat"+i).append(vettore_regole[i]["status"]);
+				if((vettore_regole[i]["author"]!=user)&&(vettore_regole[i]["status"]!=0))
+					$("#tit"+i).append(vettore_regole[i]["title"]);
+					$("#auth"+i).append(vettore_regole[i]["author"]);
+					$("#desc"+i).append(vettore_regole[i]["description"]);
+					$("#stat"+i).append("public");
 			}
 			flag_altre=1;
 		}
@@ -141,7 +151,7 @@ function loadtable_pub(){
 		if(flag_pub==0){
 			for(var j=0; j<vettore_regole.length; j++){
 				if((user==vettore_regole[j]["author"])&&(vettore_regole[j]["status"]==1)){
-					$("#miepub").append('<tr><td id="titp'+j+'"></td><td id="authp'+j+'"></td><td id="descp'+j+'"><td id="statp'+j+'"></td></td><td id="editp'+j+'"><button class="btn btn-default edit" idx="'+vettore_regole[j]["id"]+'" type="submit" name="Submit">edit</button></td><td id="dupp'+j+'"><button class="btn btn-default" idx="'+j+'">duplicate</button></td><td id="delp'+j+'"><button class="btn btn-default" idx="'+j+'">delete</button></td></tr>');
+					$("#miepub").append('<tr><td id="titp'+j+'"></td><td id="authp'+j+'"></td><td id="descp'+j+'"><td id="statp'+j+'"></td></td><td id="editp'+j+'"><button class="btn btn-default edit" id="id'+vettore_regole[j]["id"]+'" idx="'+vettore_regole[j]["id"]+'" type="submit" name="Submit">edit</button></td><td id="dupp'+j+'"><button class="btn btn-default duplicate" idx="'+j+'">duplicate</button></td><td id="delp'+j+'"><button class="btn btn-default delete" idx="'+j+'">delete</button></td></tr>');
 				}		
 			}
 			for(var i=0; i<vettore_regole.length; i++){
@@ -150,7 +160,7 @@ function loadtable_pub(){
 						$("#titp"+i).append(vettore_regole[i]["title"]);
 						$("#authp"+i).append(vettore_regole[i]["author"]);
 						$("#descp"+i).append(vettore_regole[i]["description"]);
-						$("#statp"+i).append(vettore_regole[i]["status"]);
+						$("#statp"+i).append("<button style='font-size: 8px; margin-right:8px;' class='btn btn-default changestatus' id='"+vettore_regole[i]['id']+"' idx='"+vettore_regole[i]['id']+"' type='submit' name='Submit'><span class='glyphicon glyphicon-chevron-down'></span></button><span style='text-decoration:none; cursor:auto; font-size:100%;'>public</span> ");
 					}
 				}
 			}
@@ -173,7 +183,7 @@ function loadtable_priv(){
 		if(flag_priv==0){
 			for(var j=0; j<vettore_regole.length; j++){
 				if((user==vettore_regole[j]["author"])&&(vettore_regole[j]["status"]==0)){
-					$("#miepriv").append('<tr><td id="titpp'+j+'"></td><td id="authpp'+j+'"></td><td id="descpp'+j+'"><td id="statpp'+j+'"></td></td><td id="editpp'+j+'"><button class="btn btn-default">edit</button></td><td id="duppp'+j+'"><button class="btn btn-default">duplicate</button></td><td id="delpp'+j+'"><button class="btn btn-default">delete</button></td></tr>');
+					$("#miepriv").append('<tr><td id="titpp'+j+'"></td><td id="authpp'+j+'"></td><td id="descpp'+j+'"><td id="statpp'+j+'"></td></td><td id="editpp'+j+'"><button class="btn btn-default edit" idx="'+vettore_regole[j]["id"]+'" type="submit" name="Submit">edit</button></td><td id="duppp'+j+'"><button class="btn btn-default duplicate" idx="'+vettore_regole[j]["id"]+'">duplicate</button></td><td id="delpp'+j+'"><button class="btn btn-default delete" idx="'+vettore_regole[j]["id"]+'">delete</button></td></tr>');
 				}		
 			}
 			for(var i=0; i<vettore_regole.length; i++){
@@ -181,7 +191,7 @@ function loadtable_priv(){
 					$("#titpp"+i).append(vettore_regole[i]["title"]);
 					$("#authpp"+i).append(vettore_regole[i]["author"]);
 					$("#descpp"+i).append(vettore_regole[i]["description"]);
-					$("#statpp"+i).append(vettore_regole[i]["status"]);
+					$("#statpp"+i).append("<button style='font-size: 8px; margin-right:8px;' class='btn btn-default changestatus' id='"+vettore_regole[i]['id']+"' idx='"+vettore_regole[i]['id']+"' type='submit' name='Submit'><span class='glyphicon glyphicon-chevron-up'></span></button><span id='statppp"+i+"' style='text-decoration:none; cursor:auto; font-size:100%;'>private</span> ");
 				}
 			}
 			flag_priv=1;
@@ -198,14 +208,33 @@ function getfilename(){
 }
 
 function loadgroup(){
+	var newgroup=[];
+	var trovato=0;
+	var count=1;
 	$("#tabDocuments").on("click", function(){
-		for(var i=2; i<groupdocs.length-1; i++){
-			if(groupdocs[i]!=groupdocs[i+1]){
-				$("#tablegroups").append('<tr><td class="td group" gr="'+groupdocs[i]+'">'+groupdocs[i]+'</td></tr>');
-			}
+		newgroup[2]=groupdocs[2];
+		for(var j=3; j<groupdocs.length; j++){
+			newgroup[j]=0;
 		}
+		for(var t=3; t<groupdocs.length; t++){
+        	trovato=0;
+        	for (var h=2; h<groupdocs.length; h++){
+            	if(groupdocs[t]==newgroup[h]){
+                	trovato=1;
+            	}
+        	}if (trovato==0){
+            	newgroup[count]=groupdocs[t];
+            	count++;
+        	}
+    	}
+    	for (var k=2; k<newgroup.length; k++){
+    		if (newgroup[k]!=0){
+    			$("#tablegroups").append('<tr><td class="td group" gr="'+newgroup[k]+'">'+newgroup[k]+'</td></tr>');
+    		}	
+    	}
 		loadtable_doc();
 	});
+
 	function loadtable_doc(){
 		$(".group").on("click", function(){
 			var g=$(this).attr("gr");
@@ -219,11 +248,12 @@ function loadgroup(){
 			$("#spanaltre").addClass("hide");
 			$("#tabdocs").removeClass("hide");
 			$("#tabdocs").empty();
-			$("#tabdocs").append("<tr><th>Title</th><th>Author</th><th>Group</th></tr>")
+			$("#tabdocs").append("<tr><th>Title</th><th>Author</th><th>Group</th><th>Load</th></tr>");
 			for(var j=2; j<titledocs.length; j++){
 				if(g==groupdocs[j]){
-					$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="authd'+j+'"></td><td id="groupd'+j+'"></td></tr>');
+					$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="authd'+j+'"></td><td id="groupd'+j+'"></td><td><button id="loadd'+j+'" class="btn btn-default load" idx="'+j+'">Load</button></td></tr>');
 					$("#titd"+j).append(titledocs[j]);
+					$("#authd"+j).append("Simone");
 					$("#groupd"+j).append(groupdocs[j]);
 				
 				}
@@ -232,27 +262,183 @@ function loadgroup(){
 	}
 }
 
-function edit(){
-	// var id;
-	// $(".edit").on("click",function(){
-	// 	id=$(this).attr("idx");
-	// 	alert("ok");
-	// });
+function editpub(){
+	var op;
+	var title;
+	var idx;
+	var status;
+	$('#miepub').on('click', '.edit', function() {
+		idx=$(this).attr("idx");
+		title=$("#titp"+idx).text();
+		status=$("#statp"+idx).text();
+		op="load";
+		alert(op);
+	});
+	$("#miepub").on('click', '.delete', function(){
+		idx=$(this).attr("idx");
+		title=$("#titp"+idx).text();
+		status=$("#statp"+idx).text();
+		op="delete";
+		alert(op);
+	});
+	$("#miepub").on('click', '.duplicate', function(){
+		idx=$(this).attr("idx");
+		title=$("#titp"+idx).text();
+		status=$("#statp"+idx).text();
+		op="duplicate";
+		alert(op);
+	});
+	$("#miepub").on('click', '.changestatus', function(){
+		idx=$(this).attr("idx");
+		title=$("#titp"+idx).text();
+		status=$("#statp"+idx+" span").text();
+		alert(status);
+		op="change";
+		alert(op);
+	});
 	/* attach a submit handler to the form */
     $("#formpub").submit(function(event) {
-      alert("ok pub");
+
+      event.preventDefault();
+  	  /* get the action attribute from the <form action=""> element */
+      var $form = $("#formpub"),
+          url = $form.attr( 'action' );
+      var js=vettore_regole[idx]["js"];
+      var css=vettore_regole[idx]["css"];
+      var desc=vettore_regole[idx]["description"];
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url, {status:status, title:title, op:op, auth:user, css:css, js:js, desc:desc, id:idx} );
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+      	window.location.href=data;
+      });
+    });
+}
+
+function editpriv(){
+	var op;
+	var title;
+	var idx;
+	var status;
+	$('#miepriv').on('click', '.edit', function() {
+		idx=$(this).attr("idx");
+		title=$("#titpp"+idx).text();
+		status=$("#statppp"+idx).text();
+		alert(status);
+		op="load";
+	});
+	$("#miepriv").on('click', '.delete', function(){
+		idx=$(this).attr("idx");
+		title=$("#titpp"+idx).text();
+		status=$("#statppp"+idx).text();
+		alert(status);
+		op="delete";
+		alert(op);
+	});
+	$("#miepriv").on('click', '.duplicate', function(){
+		idx=$(this).attr("idx");
+		title=$("#titpp"+idx).text();
+		status=$("#statppp"+idx).text();
+		alert(status);
+		op="duplicate";
+		alert(op);
+	});
+	$("#miepriv").on('click', '.changestatus', function(){
+		idx=$(this).attr("idx");
+		title=$("#titpp"+idx).text();
+		status=$("#statppp"+idx).text();
+		alert(status);
+		op="change";
+		alert(op);
+	});
+
+	/* attach a submit handler to the form */
+    $("#formpriv").submit(function(event) {
+
+      event.preventDefault();
+  	  /* get the action attribute from the <form action=""> element */
+      var $form = $("#formpriv"),
+          url = $form.attr( 'action' );
+      var js=vettore_regole[idx]["js"];
+      var css=vettore_regole[idx]["css"];
+      var desc=vettore_regole[idx]["description"];
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url, {status:status, title:title, op:op, auth:user, css:css, js:js, desc:desc, id:idx} );
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+      	window.location.href=data;
+      });
+    });
+}
+
+function editaltre(){
+	var op;
+	var title;
+	var idx;
+	var status;
+	$('#altre').on('click', '.edit', function() {
+		idx=$(this).attr("idx");
+		title=$("#tit"+idx).text();
+		status=$("#stat"+idx).text();
+		op="load";
+	});
+	$("#altre").on('click', '.duplicate', function(){
+		idx=$(this).attr("idx");
+		title=$("#tit"+idx).text();
+		status=$("#stat"+idx).text();
+		op="duplicate";
+		alert(op);
+	});
+	/* attach a submit handler to the form */
+    $("#formaltre").submit(function(event) {
 
       event.preventDefault();
   	  /* get the action attribute from the <form action=""> element */
       var $form = $("#formpub"),
           url = $form.attr( 'action' );
 
+      var js=vettore_regole[idx]["js"];
+      var css=vettore_regole[idx]["css"];
+      var desc=vettore_regole[idx]["description"];
+
       /* Send the data using post with element id name and name2*/
-      var posting = $.post( url, {a: "ciao"} );
+      var posting = $.post( url, {status:status, title:title, op:op, auth:user, css:css, js:js, desc:desc} );
 
       /* Alerts the results */
       posting.done(function( data ) {
+      	window.location.href=data;
       });
     });
 }
 
+function loaddoc(){
+	var title;
+	var idx;
+	var group;
+	$('#formdocs').on('click', '.load', function() {
+		idx=$(this).attr("idx");
+		title=$("#titd"+idx).text();
+		group=$("#groupd"+idx).text();
+	});
+
+	/* attach a submit handler to the form */
+    $("#formdocs").submit(function(event) {
+
+      event.preventDefault();
+  	  /* get the action attribute from the <form action=""> element */
+      var $form = $("#formdocs"),
+          url = $form.attr( 'action' );	
+
+      /* Send the data using post with element id name and name2*/
+      var posting = $.post( url, {title:title, group:group} );
+
+      /* Alerts the results */
+      posting.done(function( data ) {
+      	alert(data);
+      	window.location.href=data;
+      });
+    });
+
+}

@@ -10,6 +10,13 @@ var width = w;
 var radius = Math.min(w1, height) / 2;
 var mainChartWidth = w1;
 
+// $( window ).resize(function() {
+// 		resizee();
+// 	});
+
+// function resizee(){
+// 	alert("resize");
+// }
 // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
 var b = {
 	w : 90,
