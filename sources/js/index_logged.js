@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	//url();
+	urld();
 	pass();
 	change_idx_rul(); // navigate rule closed
 	load_title_nc_top();  // navigate rule closed
@@ -18,6 +18,7 @@ $(document).ready(function(){
 });
 
 
+
 var idx=0;
 var id_group=2;
 var id_title=0;
@@ -29,8 +30,10 @@ var groupdocs=[];
 var newgroup=[];
 var newgroup1=[];
 var first=1;
+var first_doc=1;
 var jscode;
 var csscode;
+var documento=curr_doc;
 
 
 function change_idx_rul(){
@@ -132,12 +135,12 @@ function load_rules(){
 	$("#navact").removeClass("active");
 	$("#ediTab").addClass("active");
 	$("#editact").addClass("active");
-	if ((passage==0)){
+	if (passage==0){
 		var js_code = vettore_regole[idx]["js"];
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);
 		css_editor.setValue(css_code);
-		var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		var newHREF="index_logged.php?doc="+docs[idx]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
 	}else if(passage==2){
 		var js_code = vettore_regole[idx]["js"];
@@ -149,7 +152,7 @@ function load_rules(){
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);
 		css_editor.setValue(css_code);
-		var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		var newHREF="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
 
 		setTimeout(function() { evaluateJs(); }, 2000);
@@ -208,6 +211,11 @@ function getXml(data, i){
 }
 
 function loadtitle(titolo,gruppo, i, data){
+	if(curr_doc==titolo){
+		var newHREF="index_logged.php?doc="+titolo+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		history.pushState('', 'New Page Title', newHREF);
+		newUpdateDocument(data);
+	}
 	titledocs[i]=titolo;
 	groupdocs[i]=gruppo;
 	url[i]=data;
@@ -239,6 +247,7 @@ function loadgroup(){
             	count++;
         	}
     	}
+    	console.log(newgroup);
     	var count1=0;
     	for (var k=2; k<newgroup.length; k++){
     		if (newgroup[k]!=0){
@@ -262,26 +271,56 @@ function loadgroup(){
 		}
 		//initialization
 		if(first==1){
-			$("#group").append(newgroup[id_group]);
-			$("#apply_group").attr("gr",newgroup[id_group]);
+			var gruppo;
+			// $("#group").append(newgroup[id_group]);
+			// $("#apply_group").attr("gr",newgroup[id_group]);
+			// $("#title").append(titledocs_tmp[id_title]);
+			// $("#apply_title").attr("tl", titledocs_tmp[id_title]);
+			for(var j=2; j<all_doc[2]; j++){
+				if(curr_doc==all_doc[2][j]){
+					gruppo = all_doc[2][j];
+					alert(gruppo);
+					alert(j);
+					$("#group").append(all_doc[2][j]);
+					$("#apply_group").attr("gr",all_doc[2][j]);
+					break;
+				}
+			}
+			var h=0;
+			for(var j=2; j<all_doc[0].length; j++){
+				if(gruppo==all_doc[2][j]){
+					titledocs_tmp[h]=all_doc[0][j];
+					h++;
+				}
+			}
 			$("#title").append(titledocs_tmp[id_title]);
 			$("#apply_title").attr("tl", titledocs_tmp[id_title]);
 			first=0;
+			console.log(titledocs_tmp)
 		}
 
+		//primo doc ad essere caricato
+		console.log(all_doc[2]);
 
-		$("#doc_group .glyphicon-chevron-right").on("click", function(){
+
+		$("#gruppodestra").on("click", function(){
 			if(id_group==(newgroup1.length-1)){
 				id_group=0;
+				alert(id_group);
 			}
 			else{
-				id_group++;
+				if(first_doc==1){
+					id_group=1;
+					first_doc=0;
+				}else{
+					id_group++;
+				}
 			}
 			$("#group").empty();
 			$("#apply_group").attr("gr",newgroup1[id_group]);
 			$("#group").append(newgroup1[id_group]);
 		});
-		$("#doc_group .glyphicon-chevron-left").on("click", function(){
+		$("#grupposinistra").on("click", function(){
 			if(id_group==0){
 				id_group=newgroup1.length-1;
 			}
@@ -316,6 +355,9 @@ function loadgroup(){
 	$("#apply_title").on("click", function(){
 		for(var i=2; i<all_doc[0].length; i++){
 			if(($("#apply_title").attr("tl"))==all_doc[0][i]){
+				documento=all_doc[0][i];
+				var newHREF="index_logged.php?doc="+all_doc[0][i]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+				history.pushState('', 'New Page Title', newHREF);
 				newUpdateDocument(all_doc[1][i]);
 
 				setTimeout(function() { evaluateJs(); }, 2000);
@@ -366,7 +408,7 @@ function makecopy(){
       /* Alerts the results */
       posting.done(function( data ) {
         alert(data);
-        window.location.href = "index.php?doc=a&rule="+$('#titlecpy').val()+"?pass=0"; 
+        window.location.href = "index.php?doc="+all_doc[0][2]+"&rule="+$('#titlecpy').val()+"?pass=0"; 
       });
     });
 }
@@ -553,18 +595,20 @@ function pass(){
 			/* Alerts the results */
 			posting.done(function( data ) {
 				alert(data);
-				window.location.href = "index_logged.php?doc=a&rule="+curr_rule+"&pass=0";
+				window.location.href = "index_logged.php?doc=Informal Ontology Design&rule="+curr_rule+"&pass=0";
 			});
 		});
 	}
 }
 
-function url(){
-	var js_code = vettore_regole[idx]["js"];
-	var css_code = vettore_regole[idx]["css"];
-	js_editor.setValue(js_code);
-	css_editor.setValue(css_code);
-	var newHREF="index_logged.php?doc=a&rule="+vettore_regole[idx]["title"]+"&pass=0";
-	history.pushState('', 'New Page Title', newHREF);
+function urld(){
+	$("#id_rules").on("click", function(){
+		var js_code = vettore_regole[idx]["js"];
+		var css_code = vettore_regole[idx]["css"];
+		js_editor.setValue(js_code);
+		css_editor.setValue(css_code);
+		var newHREF="index_logged.php?doc="+documento+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		history.pushState('', 'New Page Title', newHREF);
+	});
 
 }

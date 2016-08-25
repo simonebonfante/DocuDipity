@@ -311,16 +311,16 @@
 			      <div class="panel-body">
 			        <div id="sez_docs" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 						<div class="col-md-12 col-lg-12" id="doc_group">
-							<span class="glyphicon glyphicon-chevron-left col-md-2"></span>
+							<span class="glyphicon glyphicon-arrow-left col-md-2" id="grupposinistra"></span>
 							<button class="col-md-1 btn btn-default" gr="" id="apply_group">load</button>
-							<span class="glyphicon glyphicon-chevron-right col-md-2"></span>
+							<span class="glyphicon glyphicon-arrow-right col-md-2" id="gruppodestra"></span>
 							<span class="col-md-3" id="group"></span>
 							<span><input id="openxml" type="submit" value="open XML"></span>
 						</div>
 						<div class="col-md-12 col-lg-12" style="margin-top:5%;" id="doc_title">
-							<span class="glyphicon glyphicon-chevron-left col-md-2"></span>
+							<span class="glyphicon glyphicon-arrow-left col-md-2" id="titolosinistra"></span>
 							<button class="col-md-1 btn btn-default" tl="" id="apply_title">apply</button>
-							<span class="glyphicon glyphicon-chevron-right col-md-2"></span>
+							<span class="glyphicon glyphicon-arrow-right col-md-2" id="titolodestra"></span>
 							<span class="col-md-3" id="title"></span>
 						</div>
 					</div>
