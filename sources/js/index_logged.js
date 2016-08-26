@@ -20,8 +20,8 @@ $(document).ready(function(){
 
 
 var idx=0;
-var id_group=2;
-var id_title=0;
+var id_group;
+var id_title;
 var titledocs_tmp=[];
 var titledocs=[];
 var url=[];
@@ -185,7 +185,9 @@ function change_sel(){
 
 function load_docs(){
 	for(var i=2; i<docs.length; i++){
-		getXml(docs[i],i);
+		if(docs[i]!=".DS_Store"){
+			getXml(docs[i],i);
+		}
 	}
 }
 function getXml(data, i){
@@ -247,7 +249,6 @@ function loadgroup(){
             	count++;
         	}
     	}
-    	console.log(newgroup);
     	var count1=0;
     	for (var k=2; k<newgroup.length; k++){
     		if (newgroup[k]!=0){
@@ -260,61 +261,76 @@ function loadgroup(){
 	});
 
 	function initialization_doc(){
-		var idtit=0;
-		id_title=0;
-		var g=newgroup[id_group];
-		for(var j=2; j<all_doc[0].length; j++){
-			if(g==all_doc[2][j]){
-				titledocs_tmp[idtit]=all_doc[0][j];
-				idtit++;
-			}
-		}
-		//initialization
-		if(first==1){
-			var gruppo;
-			// $("#group").append(newgroup[id_group]);
-			// $("#apply_group").attr("gr",newgroup[id_group]);
-			// $("#title").append(titledocs_tmp[id_title]);
-			// $("#apply_title").attr("tl", titledocs_tmp[id_title]);
-			for(var j=2; j<all_doc[2]; j++){
-				if(curr_doc==all_doc[2][j]){
-					gruppo = all_doc[2][j];
-					alert(gruppo);
-					alert(j);
-					$("#group").append(all_doc[2][j]);
-					$("#apply_group").attr("gr",all_doc[2][j]);
-					break;
+
+		if (first==1){
+			var trovato;
+			var h=0;
+			for(var i=0; i<all_doc[0].length; i++){
+				if(curr_doc==all_doc[0][i]){
+					trovato=all_doc[2][i];
 				}
 			}
-			var h=0;
+			for (var i=0; i<newgroup1.length; i++){
+				if(trovato==newgroup1[i]){
+					id_group=i;
+				}
+			}
+			$("#group").append(newgroup1[id_group]);
+			$("#apply_group").attr("gr",newgroup1[id_group]);
+			var g=newgroup1[id_group];
 			for(var j=2; j<all_doc[0].length; j++){
-				if(gruppo==all_doc[2][j]){
+				if(g==all_doc[2][j]){
 					titledocs_tmp[h]=all_doc[0][j];
 					h++;
+				}
+			}
+			for(var i=0; i<titledocs_tmp.length; i++){
+				if(curr_doc==titledocs_tmp[i]){
+					id_title=i;
+					break;
 				}
 			}
 			$("#title").append(titledocs_tmp[id_title]);
 			$("#apply_title").attr("tl", titledocs_tmp[id_title]);
 			first=0;
-			console.log(titledocs_tmp)
 		}
+		//initialization
+		// if(first==1){
+		// 	var gruppo;
+		// 	// $("#group").append(newgroup[id_group]);
+		// 	// $("#apply_group").attr("gr",newgroup[id_group]);
+		// 	// $("#title").append(titledocs_tmp[id_title]);
+		// 	// $("#apply_title").attr("tl", titledocs_tmp[id_title]);
+		// 	for(var j=2; j<all_doc[2]; j++){
+		// 		if(curr_doc==all_doc[2][j]){
+		// 			gruppo = all_doc[2][j];
+		// 			alert(gruppo);
+		// 			alert(j);
+		// 			$("#group").append(all_doc[2][j]);
+		// 			$("#apply_group").attr("gr",all_doc[2][j]);
+		// 			break;
+		// 		}
+		// 	}
+		// 	var h=0;
+		// 	for(var j=2; j<all_doc[0].length; j++){
+		// 		if(gruppo==all_doc[2][j]){
+		// 			titledocs_tmp[h]=all_doc[0][j];
+		// 			h++;
+		// 		}
+		// 	}
+		// 	$("#title").append(titledocs_tmp[id_title]);
+		// 	$("#apply_title").attr("tl", titledocs_tmp[id_title]);
+		// 	first=0;
+		// }
 
-		//primo doc ad essere caricato
-		console.log(all_doc[2]);
-
+		//cambio gruppo di documenti
 
 		$("#gruppodestra").on("click", function(){
 			if(id_group==(newgroup1.length-1)){
 				id_group=0;
-				alert(id_group);
 			}
 			else{
-				if(first_doc==1){
-					id_group=1;
-					first_doc=0;
-				}else{
-					id_group++;
-				}
+				id_group++;
 			}
 			$("#group").empty();
 			$("#apply_group").attr("gr",newgroup1[id_group]);
@@ -330,6 +346,32 @@ function loadgroup(){
 			$("#group").empty();
 			$("#apply_group").attr("gr",newgroup1[id_group]);
 			$("#group").append(newgroup1[id_group]);
+		});
+
+		//cambio documento
+
+		$("#titolodestra").on("click", function(){
+			if(id_title==(titledocs_tmp.length-1)){
+				id_title=0;
+			}
+			else{
+				id_title++;
+			}
+			$("#title").empty();
+			$("#apply_title").attr("tl",titledocs_tmp[id_title]);
+			$("#title").append(titledocs_tmp[id_title]);
+		});
+
+		$("#titolosinistra").on("click", function(){
+			if(id_title==0){
+				id_title=titledocs_tmp.length-1;
+			}
+			else{
+				id_title--;
+			}
+			$("#title").empty();
+			$("#apply_title").attr("tl",titledocs_tmp[id_title]);
+			$("#title").append(titledocs_tmp[id_title]);
 		});
 	}
 
