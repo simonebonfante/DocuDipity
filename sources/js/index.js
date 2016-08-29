@@ -36,7 +36,7 @@ function login(){
       posting.done(function( data ) {
         if(data=="acc"){
         	alert(data);
-        	document.location.href="index_logged.php?doc=a&rule=doco_doco&pass=0";
+        	document.location.href="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[0]["title"]+"&pass=0";
         }else{
         	alert(data);
 			$('#loginModal').modal('show');

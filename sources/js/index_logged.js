@@ -140,8 +140,11 @@ function load_rules(){
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);
 		css_editor.setValue(css_code);
-		var newHREF="index_logged.php?doc="+docs[idx]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
-		history.pushState('', 'New Page Title', newHREF);
+		if((curr_doc==".")||(curr_doc=="a")){
+			curr_doc="Informal Ontology Design";
+			var newHREF="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[idx]["title"]+"&pass=0";
+			history.pushState('', 'New Page Title', newHREF);
+		}
 	}else if(passage==2){
 		var js_code = vettore_regole[idx]["js"];
 		var css_code = vettore_regole[idx]["css"];
@@ -263,35 +266,59 @@ function loadgroup(){
 	function initialization_doc(){
 
 		if (first==1){
-			var trovato;
+			var trovato=0;
 			var h=0;
 			for(var i=0; i<all_doc[0].length; i++){
 				if(curr_doc==all_doc[0][i]){
 					trovato=all_doc[2][i];
 				}
-			}
-			for (var i=0; i<newgroup1.length; i++){
-				if(trovato==newgroup1[i]){
-					id_group=i;
+			}if(trovato==0){
+				alert("doc not found");
+				trovato=newgroup1[0];
+				for (var i=0; i<newgroup1.length; i++){
+					if(trovato==newgroup1[i]){
+						id_group=i;
+					}
 				}
-			}
-			$("#group").append(newgroup1[id_group]);
-			$("#apply_group").attr("gr",newgroup1[id_group]);
-			var g=newgroup1[id_group];
-			for(var j=2; j<all_doc[0].length; j++){
-				if(g==all_doc[2][j]){
-					titledocs_tmp[h]=all_doc[0][j];
-					h++;
+				$("#group").append(newgroup1[id_group]);
+				$("#apply_group").attr("gr",newgroup1[id_group]);
+				var g=newgroup1[id_group];
+				for(var j=2; j<all_doc[0].length; j++){
+					if(g==all_doc[2][j]){
+						titledocs_tmp[h]=all_doc[0][j];
+						h++;
+					}
 				}
-			}
-			for(var i=0; i<titledocs_tmp.length; i++){
-				if(curr_doc==titledocs_tmp[i]){
-					id_title=i;
-					break;
+				id_title=0;
+				$("#title").append(titledocs_tmp[id_title]);
+				$("#apply_title").attr("tl", titledocs_tmp[id_title]);
+				var newHREF="index_logged.php?doc="+titledocs_tmp[id_title]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+				history.pushState('', 'New Page Title', newHREF);
+
+			}else{
+				for (var i=0; i<newgroup1.length; i++){
+					if(trovato==newgroup1[i]){
+						id_group=i;
+					}
 				}
+				$("#group").append(newgroup1[id_group]);
+				$("#apply_group").attr("gr",newgroup1[id_group]);
+				var g=newgroup1[id_group];
+				for(var j=2; j<all_doc[0].length; j++){
+					if(g==all_doc[2][j]){
+						titledocs_tmp[h]=all_doc[0][j];
+						h++;
+					}
+				}
+				for(var i=0; i<titledocs_tmp.length; i++){
+					if(curr_doc==titledocs_tmp[i]){
+						id_title=i;
+						break;
+					}
+				}
+				$("#title").append(titledocs_tmp[id_title]);
+				$("#apply_title").attr("tl", titledocs_tmp[id_title]);
 			}
-			$("#title").append(titledocs_tmp[id_title]);
-			$("#apply_title").attr("tl", titledocs_tmp[id_title]);
 			first=0;
 		}
 		//initialization

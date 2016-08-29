@@ -3,7 +3,40 @@
   	session_start();
   	if (isset($_SESSION['user'])){
       	header("location: index_logged.php?doc=a&rule=doco_code&pass=0");
-  	}	
+  	}
+  	include "php/config_db.php";
+	$host=$_SESSION["host"]; // Host name 
+	$username=$_SESSION["username"];// Mysql username 
+	$password=$_SESSION["password"]; // Mysql password 
+	$db_name=$_SESSION["db_name"]; // Database name 
+	$conn = new mysqli("$host", "$username", "$password", "$db_name");
+
+	// Check connection to database
+	if ($conn->connect_errno) {
+	  // header('refresh: 3; url = /gestione_regole.php');
+	  echo "Failed to connect";
+	}
+
+	$sql = "SELECT id, author, title, status, description, js, css FROM rules";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+	    // output data of each row
+	    $j=0;
+	    while($row = $result->fetch_assoc()) {
+	        $vettore_regole[$j]["id"] = $row["id"];
+	        $vettore_regole[$j]["author"] = $row["author"];
+	        $vettore_regole[$j]["title"] = $row["title"];
+	        $vettore_regole[$j]["status"] = $row["status"];
+	        $vettore_regole[$j]["description"] = $row["description"];
+	        $vettore_regole[$j]["js"] = $row["js"];
+	        $vettore_regole[$j]["css"] = $row["css"];
+	        $j++;
+	    }
+	} else {
+	    echo "0 results";
+	}
+	$conn->close();	
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,12 +55,14 @@
 		<script src="lib/codemirror-4.7/lib/codemirror.js"></script>
 		<script src="lib/codemirror-4.7/mode/javascript/javascript.js"></script>
 		<script src="lib/codemirror-4.7/mode/css/css.js"></script>
+		<script type="text/javascript">var vettore_regole = <?php echo json_encode($vettore_regole); ?></script>
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="lib/codemirror-4.7/lib/codemirror.css">
 		<link rel="stylesheet" type="text/css" href="css/patternsHTML.css">
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
 		<link rel="stylesheet" type="text/css" href="css/draw.css"/>
 		<link rel="stylesheet" type="text/css" href="css/rec.css"/>
+
 	</head>
 	<body>
 		<!-- Modal Sign up-->
