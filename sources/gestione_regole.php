@@ -144,7 +144,7 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px;">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 5px;">
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-				<span class='glyphicon glyphicon-chevron-left'><a style="color:black; margin-left:5px;" href="index.php">Home</a></span>
+				<span class='glyphicon glyphicon-chevron-left'><a style="color:black; margin-left:5px;" href="index.php?doc=Informal Ontology Design&rule=doco_code&pass=0">Home</a></span>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				<h2>Docudipity - Management</h2>

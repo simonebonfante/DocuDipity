@@ -285,7 +285,7 @@
 
 	<div style="padding: 5px; border-bottom:1px solid black; border-radius:4px;" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 5px;">
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
-				<span style="cursor:pointer; font-size:130%;" class='glyphicon glyphicon-chevron-left'><a style="color:black; margin-left:5px;" href="http://127.0.0.1/DocuDipity/sources/gestione_regole.php">Management</a></span>
+				<span style="cursor:pointer; font-size:130%;" class='glyphicon glyphicon-chevron-left'><a style="color:black; margin-left:5px;" href="gestione_regole.php">Management</a></span>
 			</div>
 			<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 				<h1>Docudipity</h1>

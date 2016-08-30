@@ -170,7 +170,7 @@ function load_rules(){
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);
 		css_editor.setValue(css_code);
-		var newHREF="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[idx]["title"]+"&pass=0";
+		var newHREF="index.php?doc=Informal Ontology Design&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
 
 		setTimeout(function() { evaluateJs(); }, 2000);
@@ -345,7 +345,7 @@ function loadgroup(){
 				id_title=0;
 				$("#title").append(titledocs_tmp[id_title]);
 				$("#apply_title").attr("tl", titledocs_tmp[id_title]);
-				var newHREF="index_logged.php?doc="+titledocs_tmp[id_title]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+				var newHREF="index.php?doc="+titledocs_tmp[id_title]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
 				history.pushState('', 'New Page Title', newHREF);
 			}
 			first=0;
