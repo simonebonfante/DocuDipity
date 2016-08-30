@@ -119,17 +119,6 @@ function hide_cont(){
 	});
 
 }
-function load_rules_base(){
-	var js_code = vettore_regole[idx]["js"];
-	var css_code = vettore_regole[idx]["css"];
-	js_editor.setValue(js_code);
-	css_editor.setValue(css_code);
-	if(($("#collapse_er").attr("aria-expanded"))=="false"){
-		$("#collapse_er").attr("aria-expanded",true);
-	}
-
-	// setTimeout(function() { evaluateJs(); }, delayDraw);
-}
 function load_rules(){
 	$("#navTab").removeClass("active");
 	$("#navact").removeClass("active");
@@ -157,6 +146,8 @@ function load_rules(){
 		css_editor.setValue(css_code);
 		var newHREF="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[idx]["title"]+"&pass=0";
 		history.pushState('', 'New Page Title', newHREF);
+
+
 
 		setTimeout(function() { evaluateJs(); }, 2000);
 
@@ -319,6 +310,29 @@ function loadgroup(){
 				$("#title").append(titledocs_tmp[id_title]);
 				$("#apply_title").attr("tl", titledocs_tmp[id_title]);
 			}
+			if(curr_doc==null){
+				var hh=0;
+				trovato=newgroup1[0];
+				for (var i=0; i<newgroup1.length; i++){
+					if(trovato==newgroup1[i]){
+						id_group=i;
+					}
+				}
+				$("#group").append(newgroup1[id_group]);
+				$("#apply_group").attr("gr",newgroup1[id_group]);
+				var g=newgroup1[id_group];
+				for(var j=2; j<all_doc[0].length; j++){
+					if(g==all_doc[2][j]){
+						titledocs_tmp[hh]=all_doc[0][j];
+						hh++;
+					}
+				}
+				id_title=0;
+				$("#title").append(titledocs_tmp[id_title]);
+				$("#apply_title").attr("tl", titledocs_tmp[id_title]);
+				var newHREF="index_logged.php?doc="+titledocs_tmp[id_title]+"&rule="+vettore_regole[idx]["title"]+"&pass=0";
+				history.pushState('', 'New Page Title', newHREF);
+			}
 			first=0;
 		}
 		//initialization
@@ -477,7 +491,7 @@ function makecopy(){
       /* Alerts the results */
       posting.done(function( data ) {
         alert(data);
-        window.location.href = "index.php?doc="+all_doc[0][2]+"&rule="+$('#titlecpy').val()+"?pass=0"; 
+        window.location.href = "index_logged.php?doc="+all_doc[0][2]+"&rule="+$('#titlecpy').val()+"?pass=0"; 
       });
     });
 }

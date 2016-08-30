@@ -9,6 +9,6 @@
 	    );
 	}
 	session_destroy();
-	header('refresh: 1; url= ../index.php');
+	header('refresh: 1; url= ../index.php?doc=Informal Ontology Design&rule=doco_code&pass=0');
 	echo "logout";
 ?>
