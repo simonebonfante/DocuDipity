@@ -17,7 +17,7 @@ function loadtable(){
 	$("#tablerules").removeClass("hide");
 	if(flag==0){
 		for(var j=0; j<vettore_regole.length; j++){
-			$("#tablerules").append('<tr><td id="tit'+j+'"></td><td id="auth'+j+'"></td><td id="desc'+j+'"></td><td id="edit'+j+'"><button class="btn btn-default">edit</button></td><td id="dup'+j+'"><button class="btn btn-default">duplicate</button></td></tr>');
+			$("#tablerules").append('<tr><td id="tit'+j+'"></td><td id="auth'+j+'"></td><td id="desc'+j+'"></td><td id="edit'+j+'"><button class="btn btn-default" disabled>edit</button></td><td id="dup'+j+'"><button class="btn btn-default" disabled>duplicate</button></td></tr>');
 		}
 		for(var i=0; i<vettore_regole.length; i++){
 			$("#tit"+i).append(vettore_regole[i]["title"]);

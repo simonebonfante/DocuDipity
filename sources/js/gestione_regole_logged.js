@@ -10,8 +10,9 @@ $(document).ready(function(){
     editpriv();
     editaltre();
     loaddoc();
+    caricadoc();
+    //loadzip();
 });
-
 
 
 var flag_altre=0;
@@ -23,6 +24,20 @@ flag_docs[1]=0;
 var titledocs=[];
 var groupdocs=[];
 var newgroupdocs=[];
+var controllo_gruppo=1;
+var namespace=[];
+
+function caricadoc(){
+	$("#loadrules").on("click",function(){
+		$(".td").removeClass("red");
+		$(this).addClass("red");
+		$(".table-striped").addClass("hide");
+		$("#prerules").addClass("hide");
+		$(".spantab").addClass("hide");
+		$("#caricadoc").removeClass("hide");
+		loadzip();
+	});
+}
 
 function getXml(data, i){
 	var xhttp = new XMLHttpRequest();
@@ -55,6 +70,7 @@ function pre_create(){
 		$("#createrules").addClass("red");
 		$(".table-striped").addClass("hide");
 		$("#prerules").removeClass("hide");
+		$("#caricadoc").addClass("hide");
 		$(".spantab").addClass("hide");
 	});
 }
@@ -441,4 +457,100 @@ function loaddoc(){
       });
     });
 
+}
+
+function loadzip(){
+	var count_contr_gr=0;
+	var version;
+	var xmlns;
+	/* attach a submit handler to the form */
+   $('#uploadSubmitBtn').on('click', function() {
+        var file_data = $('#uploadBrowseBtn').prop('files')[0];   
+        var form_data = new FormData();
+        form_data.append('file', file_data);                        
+        $.ajax({
+            url: 'php/caricadoc.php',
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,                         
+            type: 'post',
+            success: function(data){
+            	
+            	if((data=="Sorry, your file is too large.")||(data=="Sorry, file already exists.")||(data=="Sorry, only ZIP files are allowed")||(data=="Sorry, your file was not uploaded.")||(data=="Sorry, only XML files are allowed.")||(data=="doh!")||(data=="Sorry, there was an error uploading your file.")){
+            		alert(data);
+                	window.location.href="gestione_regole.php";
+            	}else if(data[0]=="Sorry, file already exists."){
+            		for (var i=1; i<data.length; i++){
+            			alert(data[i]);
+            		}
+            		window.location.href="gestione_regole.php";
+            	}
+            	else{
+            		console.log(data);
+            		var i;
+            		for(i=0; i<data.length; i++){
+	            		var xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+						   if (this.readyState == 4 && this.status == 200) {
+						   		count_contr_gr=count_contr_gr+1;
+						       myFunction(this, count_contr_gr);
+						   }
+						};
+						xhttp.open("GET", "data/xml/"+data[i]+"", true);
+						xhttp.send();
+            		}
+            		function myFunction(xml, idx) {
+					    var x, xmlDoc, a;
+					    xmlDoc = xml.responseXML;
+					    txt = "";
+					    x = xmlDoc.getElementsByTagName('article');
+					    if(idx==1){
+            				version = x[0].getAttribute('version');
+					    	xmlns = x[0].getAttribute('xmlns');
+					    	console.log("ecco: "+version);
+            			}
+            			else{
+            				if((version!=x[0].getAttribute('version'))||(xmlns!=x[0].getAttribute('xmlns'))){
+            					controllo_gruppo=0;
+            				}
+            			}
+					    //count_group(version,xmlns, idx);
+					}
+					alert(controllo_gruppo);
+            		if(controllo_gruppo==0){
+            			alert("Non sono dello stesso gruppo");
+            			for(var j=0; j<data.length; j++){
+            				var file_data = data[j];   
+					        var form_data = new FormData();
+					        form_data.append('file', file_data);
+	            			$.ajax({
+					            url: 'php/delete_xml.php',
+					            dataType: 'json',
+					            cache: false,
+					            contentType: false,
+					            processData: false,
+					            data: form_data,                         
+					            type: 'post',
+					            success: function(data){
+					                console.log(data);
+					            }
+					        });
+	            		}
+	            		window.location.href="gestione_regole.php";
+
+			        }
+            		else{
+            			alert("Documento caricato");
+            			//controlla_gruppo();
+            		}
+            		// for (var j=0; j<data.length; j++){
+            		// 	console.log( namespace[j][0]);
+            		// 	console.log( namespace[j][1]);
+            		// }
+            	}
+            }
+        });
+    });
 }

@@ -11,6 +11,7 @@
     $js=$_POST["js"];
     $css=$_POST["css"];
     $author=$_POST["author"];
+    $doc=$_POST["title_doc"];
 
     $conn = new mysqli($host, $username, $password, $db_name);
     // Check connection
@@ -27,7 +28,7 @@
 		$stmt->bind_param('ssss', $js, $css, $title, $author);
 		if ($stmt->execute()) 
 		{
-			echo "index_logged.php?doc=a&rule=".$title."&pass=0";
+			echo "index_logged.php?doc=".$doc."&rule=".$title."&pass=0";
 		} 
 		else 
 		{

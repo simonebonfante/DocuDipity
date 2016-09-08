@@ -11,6 +11,7 @@
     $js=$_POST["js"];
     $css=$_POST["css"];
     $author=$_POST["author"];
+    $doc=$_POST["title_doc"];
 
     if($radio=="private"){
     	$status=0;
@@ -49,7 +50,7 @@
 		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
 	header('refresh: 2; url = ../index.php');
-    echo "index_logged.php?doc=a&rule=".$title."&pass=0";
+    echo "index_logged.php?doc=".$doc."&rule=".$title."&pass=0";
 
     $conn->close();
 ?>

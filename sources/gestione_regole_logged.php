@@ -131,6 +131,11 @@
 								Crea nuova regola
 							</td>
 						</tr>
+						<tr>
+							<td class="td" id="loadrules" >
+								Carica documenti
+							</td>
+						</tr>
 					</table>
 			    </div>
 			    <div role="tabpanel" class="tab-pane" id="docs">
@@ -275,6 +280,21 @@
 							</div> 
 						</div> 
 					</div>
+					<form id="caricadoc" method="post" enctype="multipart/form-data" class="hide" action="php/caricadoc.php">
+						<span class="spantab1">Carica Documenti</span>
+						<div class="col-md-12" style="padding-top:2%;">
+							<p><b>IMPORTANTE:</b></p>
+							<p>L'utente dovrà caricare un file.zip ZIP (dim max 10M) contente documenti XML tutti appartenenti allo stesso gruppo.</p>
+							<p>Qualora il file caricato non rispettasse queste caratteristiche/fosse già stato caricato da un atro utente non verrà accettato.</p>
+						</div>
+						<div class="col-md-12" style="padding-top:2%;">
+							<p><b>Select docs to upload:</b></p><br>
+							<!-- <input type="file" name="fileToUpload" id="fileToUpload"><br>
+							<input type="submit" value="Upload Documents" name="submit"><br> -->
+							<input type="file" id="uploadBrowseBtn"><br>
+							<input type="button" id="uploadSubmitBtn" value="Upload">
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

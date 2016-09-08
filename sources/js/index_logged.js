@@ -564,11 +564,16 @@ function presave(){
 }
 
 function save(){
+	var titolo;
 	$("#saveauthor").attr("value",user);
 	// var jsedt=jseditor.getValue();s
 	/* attach a submit handler to the form */
     $("#save").submit(function(event) {
-
+    	if(titledocs_tmp[id_title]==undefined){
+    		titolo="Informal Ontology Design";
+    	}else{
+    		titolo=titledocs_tmp[id_title];
+    	}
       /* stop form from submitting normally */
       event.preventDefault();
 
@@ -579,7 +584,7 @@ function save(){
       var posting2 = $.post ("php/get_idx.php",{});
       posting2.done(function( data ) {
       	  /* Send the data using post with element id name and name2*/
-	      var posting1 = $.post( url1, { title: $('#savetitle').val(), description: $('#savedesc').val(), status: $('input[name="status_save"]:checked').val(), js: jscode, css: csscode, id: data, author: $("#saveauthor").val() } );
+	      var posting1 = $.post( url1, { title: $('#savetitle').val(), description: $('#savedesc').val(), status: $('input[name="status_save"]:checked').val(), js: jscode, css: csscode, id: data, author: $("#saveauthor").val(), title_doc:titolo } );
 
 	      /* Alerts the results */
 	      posting1.done(function( data1 ) {
@@ -590,10 +595,15 @@ function save(){
 }
 
 function save1(jscode, csscode){
+	var titolo;
 	// var jsedt=jseditor.getValue();s
 	/* attach a submit handler to the form */
     $("#save1").submit(function(event) {
-
+    	if(titledocs_tmp[id_title]==undefined){
+    		titolo="Informal Ontology Design";
+    	}else{
+    		titolo=titledocs_tmp[id_title];
+    	}
       /* stop form from submitting normally */
       event.preventDefault();
 
@@ -601,7 +611,7 @@ function save1(jscode, csscode){
       var $form = $( this ),
           url1 = $form.attr( 'action' );
       	  /* Send the data using post with element id name and name2*/
-      var posting1 = $.post( url1, { title: $('#savetitle1').text(), description: $('#savedesc1').text(), status: $('#savestatus1').text(), js: jscode, css: csscode, author: user } );
+      var posting1 = $.post( url1, { title: $('#savetitle1').text(), description: $('#savedesc1').text(), status: $('#savestatus1').text(), js: jscode, css: csscode, author: user, title_doc:titolo } );
 
       /* Alerts the results */
       posting1.done(function( data1 ) {

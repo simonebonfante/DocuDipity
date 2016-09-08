@@ -183,8 +183,13 @@
 							<th>Operazioni</th>
 						</tr>
 						<tr>
-							<td class="td" id="createrules" onclick="login()">
+							<td class="td" id="createrules" onclick="pre_login()">
 								Crea nuova regola
+							</td>
+						</tr>
+						<tr>
+							<td class="td" id="loadrules" onclick="pre_login()">
+								Carica documenti
 							</td>
 						</tr>
 					</table>
