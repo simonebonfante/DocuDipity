@@ -52,7 +52,7 @@ function evaluateJs() {
 	$('head').append('<style type="text/css" id="css_included">' + css_text + '</style>');
 	
 	var doco_text = js_editor.getValue();
-	eval("function draw_doco() { try{"+ doco_text + "} catch (e) { if (e instanceof TypeError) { alert(e); } else if (e instanceof RangeError) { alert(e); } else if (e instanceof SyntaxError) { alert(e); } else if (e instanceof EvalError) { alert(e); } else { alert(e);} }} draw_doco();	");
+	eval("function draw_doco() { try{"+ doco_text + "} catch (e) { if (e instanceof TypeError) { alert('Error in js: '+e); } else if (e instanceof RangeError) { alert('Error in js: '+e); } else if (e instanceof SyntaxError) { alert('Error in js: '+e); } else if (e instanceof EvalError) { alert('Error in js: '+e); } else { alert('Error in js: '+e);} }} draw_doco();	");
 
 	//$('head').append('<style type="text/css">path.doco-paragraph {fill: blue !important;}</style>');
 		

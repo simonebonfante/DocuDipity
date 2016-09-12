@@ -88,7 +88,7 @@ if ($uploadOk == 0) {
             //rimuovo le cartelle
             $dirrm= scandir('../data/intermezzo/'.$name_dir, 1);
             for($i=0; $i<count($dirrm); $i++){
-                if(($dirrm[$i]!=".")){
+                if(($dirrm[$i]!="..")&&($dirrm[$i]!=".")){
                     unlink("../data/intermezzo/".$name_dir."/".$dirrm[$i]);
                 }
               }

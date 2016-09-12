@@ -133,6 +133,7 @@ function loadtable_altre(){
 		$("#spanpub").addClass("hide");
 		$("#spanpriv").addClass("hide");
 		$("#spandoc").addClass("hide");
+		$("#caricadoc").addClass("hide");
 		$("#spanaltre").removeClass("hide");
 		$("#altre").removeClass("hide");
 		if(flag_altre==0){
@@ -162,6 +163,7 @@ function loadtable_pub(){
 		$("#spanpub").removeClass("hide");
 		$("#spanpriv").addClass("hide");
 		$("#spandoc").addClass("hide");
+		$("#caricadoc").addClass("hide");
 		$("#spanaltre").addClass("hide");
 		$("#miepub").removeClass("hide");
 		if(flag_pub==0){
@@ -194,6 +196,7 @@ function loadtable_priv(){
 		$("#spanpub").addClass("hide");
 		$("#spanpriv").removeClass("hide");
 		$("#spandoc").addClass("hide");
+		$("#caricadoc").addClass("hide");
 		$("#spanaltre").addClass("hide");
 		$("#miepriv").removeClass("hide");
 		if(flag_priv==0){
@@ -477,7 +480,6 @@ function loadzip(){
             data: form_data,                         
             type: 'post',
             success: function(data){
-            	
             	if((data=="Sorry, your file is too large.")||(data=="Sorry, file already exists.")||(data=="Sorry, only ZIP files are allowed")||(data=="Sorry, your file was not uploaded.")||(data=="Sorry, only XML files are allowed.")||(data=="doh!")||(data=="Sorry, there was an error uploading your file.")){
             		alert(data);
                 	window.location.href="gestione_regole.php";

@@ -108,6 +108,7 @@ function load_title_nc_top(){
 		status="public";
 	}
 	$("#spantitle").empty();
+	$("#spantitle1").empty();
 	$("#spanauth").empty();
 	$("#spandesc").empty();
 	$("#spanstatus").empty();
@@ -115,6 +116,7 @@ function load_title_nc_top(){
 	$("#spancss").empty();
 
 	$("#spantitle").append(vettore_regole[idx]["title"]);
+	$("#spantitle1").append(vettore_regole[idx]["title"]);
 	$("#spanauth").append(vettore_regole[idx]["author"]);
 	$("#spandesc").append(vettore_regole[idx]["description"]);
 	$("#spanstatus").append(status);
@@ -510,7 +512,7 @@ function first_eval(){
 	var css_text=vettore_regole[count]["css"];
 	$('head').append('<style type="text/css" id="css_included">' + css_text + '</style>');
 	var doco_text = vettore_regole[count]["js"];
-	eval("function draw_doco() { try{"+ doco_text + "} catch (e) { if (e instanceof TypeError) { alert(e); } else if (e instanceof RangeError) { alert(e); } else if (e instanceof SyntaxError) { alert(e); } else if (e instanceof EvalError) { alert(e); } else { alert(e);} }} draw_doco();	");
+	eval("function draw_doco() { try{"+ doco_text + "} catch (e) { if (e instanceof TypeError) { alert('Error in js: '+e); } else if (e instanceof RangeError) { alert('Error in js: '+e); } else if (e instanceof SyntaxError) { alert('Error in js: '+e); } else if (e instanceof EvalError) { alert('Error in js: '+e); } else { alert('Error in js: '+e);} }} draw_doco();	");
 
 	var docosel = $("classeddocument [class*=' doco-']");
 	docosel.each(function() {
@@ -521,6 +523,8 @@ function first_eval(){
 
 function urld(){
 	$("#id_rules").on("click", function(){
+		alert("ce la fai?");
+		alert(vettore_regole[idx]["title"]);
 		var js_code = vettore_regole[idx]["js"];
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);

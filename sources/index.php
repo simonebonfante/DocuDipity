@@ -172,7 +172,7 @@
 			    <div class="panel-heading" role="tab" id="headingTre" style="height:30px;">
 			      <h4 class="panel-title">
 			        <a id="tabDocuments" class="collapsed" role="button" data-toggle="collapse" data-parent="#collapse_title" href="#collapseTre" aria-expanded="false" aria-controls="collapseTre">
-			          Group & title
+			          Conferences & Papers
 			        </a>
 			      </h4>
 			    </div>
@@ -181,16 +181,15 @@
 			        <div id="sez_docs" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
 						<div class="col-md-12 col-lg-12" id="doc_group">
 							<span class="glyphicon glyphicon-arrow-left col-md-2" id="grupposinistra"></span>
-							<button class="col-md-1 btn btn-default" gr="" id="apply_group">load</button>
+							<span class="col-md-4" id="group"></span>
 							<span class="glyphicon glyphicon-arrow-right col-md-2" id="gruppodestra"></span>
-							<span class="col-md-3" id="group"></span>
-							<span><input id="openxml" type="submit" value="open XML"></span>
+							<button class="col-md-1 btn btn-default" gr="" id="apply_group">view</button>
 						</div>
-						<div class="col-md-12 col-lg-12" style="margin-top:5%;" id="doc_title">
+						<div class="col-md-12 col-lg-12" style="margin-top:2%;" id="doc_title">
 							<span class="glyphicon glyphicon-arrow-left col-md-2" id="titolosinistra"></span>
-							<button class="col-md-1 btn btn-default" tl="" id="apply_title">apply</button>
+							<span class="col-md-4" id="title"></span>
 							<span class="glyphicon glyphicon-arrow-right col-md-2" id="titolodestra"></span>
-							<span class="col-md-3" id="title"></span>
+							<button class="col-md-1 btn btn-default" tl="" id="apply_title">apply</button>
 						</div>
 					</div>
 			      </div>
@@ -219,12 +218,17 @@
 					<div id="chart" >
 						
 					</div>
-					<div class="col-xs-1 col-md-1 col-sm-1 col-lg-1 " style="font-size:120%; float:right;"><span class="glyphicon glyphicon-arrow-down"></span></div>
 				</div>
 				<div id="sidebar">
 				</div>
 		    	<div id="document" class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
 		    </div>
+		    <div class="col-xs-4 col-md-4 col-sm-4 col-lg-4 "></div>
+		    <div class="col-xs-4 col-md-4 col-sm-3 col-lg-4 " style="font-size:120%;">
+				<span class="glyphicon glyphicon-arrow-down col-xs-4 col-md-4 col-sm-3 col-lg-4"></span>
+				<div class="col-xs-4 col-md-4 col-sm-3 col-lg-4"> <span id="spantitle1"></span></div>
+				<span class="glyphicon glyphicon-arrow-down col-xs-4 col-md-4 col-sm-3 col-lg-4"></span>
+			</div>
 		</div>
 		<!-- Inizio Tab-->
 		<div id="features" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:-30px;">
