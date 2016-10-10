@@ -92,12 +92,11 @@ function loadgroup(){
 			$(".table-striped").addClass("hide");
 			$("#tabdocs").removeClass("hide");
 			$("#tabdocs").empty();
-			$("#tabdocs").append("<tr><th>Title</th><th>Author</th><th>Group</th></tr>");
+			$("#tabdocs").append("<tr><th>Title</th><th>Group</th></tr>");
 				for(var j=2; j<titledocs.length; j++){
 					if(g==groupdocs[j]){
-						$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="authd'+j+'"></td><td id="groupd'+j+'"></td></tr>');
+						$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="groupd'+j+'"></td></tr>');
 						$("#titd"+j).append(titledocs[j]);
-						$("#authd"+j).append("Simone");
 						$("#groupd"+j).append(groupdocs[j]);
 					}
 				}
@@ -122,10 +121,8 @@ function login(){
       /* Alerts the results */
       posting.done(function( data ) {
         if(data=="acc"){
-        	alert(data);
         	document.location.href="gestione_regole_logged.php";
         }else{
-        	alert(data);
 			$('#loginModal').modal('show');
 		    $("#logmail").addClass("has-error");
 		    $("#logpassword").addClass("has-error");
@@ -152,7 +149,6 @@ function signup(){
       /* Alerts the results */
       posting.done(function( data ) {
         if(data=="signed"){
-        	alert(data);
         	document.location.href="gestione_regole_logged.php";
         }else{
         	alert(data);

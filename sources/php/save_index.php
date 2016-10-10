@@ -41,15 +41,15 @@
 
     $stmt = $conn->prepare("INSERT INTO rules (js, css, title, id, status, description, author) VALUES (?, ?, ?, ?, ?, ?, ?)");
     if ( false===$stmt ) {
-      header('refresh: 3; url = ../index.php');
+      //header('refresh: 3; url = ../index.php');
       echo "Failed to prepare the query";    
     }
 	$stmt->bind_param('sssddss', $js, $css, $title, $id, $status, $description, $author);
     if (!$stmt->execute()) {
-		header("refresh: 2; url=../index.php");
+		//header("refresh: 2; url=../index.php");
 		echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 	}
-	header('refresh: 2; url = ../index.php');
+	//header('refresh: 2; url = ../index.php');
     echo "index_logged.php?doc=".$doc."&rule=".$title."&pass=0";
 
     $conn->close();

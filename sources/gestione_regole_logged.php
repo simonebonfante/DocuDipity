@@ -114,13 +114,13 @@
 							<th>Regole</th>
 						</tr>
 						<tr>
-							<td id="pubrules"  class="td">mie pubbliche</td>
+							<td id="pubrules"  class="td">my public</td>
 						</tr>
 						<tr>
-							<td id="privrules" class="td">mie private</td>
+							<td id="privrules" class="td">my private</td>
 						</tr>
 						<tr>
-							<td id="altrerules" class="td">altre</td>
+							<td id="altrerules" class="td">all public</td>
 						</tr>
 						
 						<tr>
@@ -244,7 +244,6 @@
 						<table id="tabdocs" class="table table-striped hide">
 							<tr>
 								<th>Title</th>
-								<th>Author</th>
 								<th>Group</th>
 								<th>Load</th>
 							</tr>

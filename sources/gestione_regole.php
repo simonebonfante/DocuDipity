@@ -171,13 +171,13 @@
 							<th>Regole</th>
 						</tr>
 						<tr>
-							<td class="td" onclick="pre_login()">mie pubbliche</td>
+							<td class="td" onclick="pre_login()">my public</td>
 						</tr>
 						<tr>
-							<td class="td" onclick="pre_login()">mie private</td>
+							<td class="td" onclick="pre_login()">my private</td>
 						</tr>
 						<tr>
-							<td class="td" onclick="loadtable()">altre</td>
+							<td class="td" onclick="loadtable()">all public</td>
 						</tr>
 						<tr>
 							<th>Operazioni</th>
@@ -246,7 +246,6 @@
 					<table id="tabdocs" class="table table-striped hide">
 						<tr>
 							<th>Title</th>
-							<th>Author</th>
 							<th>Group</th>
 							<th>Load</th>
 						</tr>

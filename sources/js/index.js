@@ -52,10 +52,8 @@ function login(){
       /* Alerts the results */
       posting.done(function( data ) {
         if(data=="acc"){
-        	alert(data);
         	document.location.href="index_logged.php?doc=Informal Ontology Design&rule="+vettore_regole[0]["title"]+"&pass=0";
         }else{
-        	alert(data);
 			$('#loginModal').modal('show');
 		    $("#logmail").addClass("has-error");
 		    $("#logpassword").addClass("has-error");
@@ -100,42 +98,51 @@ function change_idx_rul(){
 }
 
 function load_title_nc_top(){
-	var status;
-	if (vettore_regole[idx]["status"]==0){
-		status="private";
+	
+	if (vettore_regole[idx]["status"]==1){
+		var status;
+		if (vettore_regole[idx]["status"]==0){
+			status="private";
+		}
+		else{
+			status="public";
+		}
+		$("#spantitle").empty();
+		$("#spantitle1").empty();
+		$("#spanauth").empty();
+		$("#spandesc").empty();
+		$("#spanstatus").empty();
+		$("#spanjs").empty();
+		$("#spancss").empty();
+
+		$("#spantitle").append(vettore_regole[idx]["title"]);
+		$("#spantitle1").append(vettore_regole[idx]["title"]);
+		$("#spanauth").append(vettore_regole[idx]["author"]);
+		$("#spandesc").append(vettore_regole[idx]["description"]);
+		$("#spanstatus").append(status);
+
+		//invisible
+		$("#spanjs").append(vettore_regole[idx]["js"]);
+		$("#spancss").append(vettore_regole[idx]["css"]);
+
+		$("#navigate_rule_close_top").empty();
+		$("#navigate_rule_close_top").append('<span idx="'+idx+'" class="span_nc">'+vettore_regole[idx]["title"]+'</span>');
 	}
-	else{
-		status="public";
-	}
-	$("#spantitle").empty();
-	$("#spantitle1").empty();
-	$("#spanauth").empty();
-	$("#spandesc").empty();
-	$("#spanstatus").empty();
-	$("#spanjs").empty();
-	$("#spancss").empty();
-
-	$("#spantitle").append(vettore_regole[idx]["title"]);
-	$("#spantitle1").append(vettore_regole[idx]["title"]);
-	$("#spanauth").append(vettore_regole[idx]["author"]);
-	$("#spandesc").append(vettore_regole[idx]["description"]);
-	$("#spanstatus").append(status);
-
-	//invisible
-	$("#spanjs").append(vettore_regole[idx]["js"]);
-	$("#spancss").append(vettore_regole[idx]["css"]);
-
-	$("#navigate_rule_close_top").empty();
-	$("#navigate_rule_close_top").append('<span idx="'+idx+'" class="span_nc">'+vettore_regole[idx]["title"]+'</span>');
 }
 
 function load_title_nc_bot(){
-	$("#seltit").append('<option class="first-child" idx="'+vettore_regole[0]["id"]+'" id="op_0" value="'+vettore_regole[0]["title"]+'">'+vettore_regole[0]["title"]+'</option>');
+	if (vettore_regole[0]["status"]==1){
+		$("#seltit").append('<option class="first-child" idx="'+vettore_regole[0]["id"]+'" id="op_0" value="'+vettore_regole[0]["title"]+'">'+vettore_regole[0]["title"]+'</option>');
+	}
 	for(var i=1; i<vettore_regole.length-1; i++){
-		$("#seltit").append('<option idx="'+vettore_regole[i]["id"]+'" id="op_'+i+'" value="'+vettore_regole[i]["title"]+'">'+vettore_regole[i]["title"]+'</option>');
+		if (vettore_regole[i]["status"]==1){
+			$("#seltit").append('<option idx="'+vettore_regole[i]["id"]+'" id="op_'+i+'" value="'+vettore_regole[i]["title"]+'">'+vettore_regole[i]["title"]+'</option>');
+		}
 	}
 	var j=vettore_regole.length-1;
-	$("#seltit").append('<option class="last-child" idx="'+vettore_regole[j]["id"]+'" id="op_'+j+'" value="'+vettore_regole[j]["title"]+'">'+vettore_regole[j]["title"]+'</option>');
+	if (vettore_regole[j]["status"]==1){
+		$("#seltit").append('<option class="last-child" idx="'+vettore_regole[j]["id"]+'" id="op_'+j+'" value="'+vettore_regole[j]["title"]+'">'+vettore_regole[j]["title"]+'</option>');
+	}
 }
 
 function hide_cont(){
@@ -523,8 +530,6 @@ function first_eval(){
 
 function urld(){
 	$("#id_rules").on("click", function(){
-		alert("ce la fai?");
-		alert(vettore_regole[idx]["title"]);
 		var js_code = vettore_regole[idx]["js"];
 		var css_code = vettore_regole[idx]["css"];
 		js_editor.setValue(js_code);

@@ -78,35 +78,80 @@ function load_title_nc_top(){
 	else{
 		status="public";
 	}
-	$("#spantitle").empty();
-	$("#spantitle1").empty();
-	$("#spanauth").empty();
-	$("#spandesc").empty();
-	$("#spanstatus").empty();
-	$("#spanjs").empty();
-	$("#spancss").empty();
 
-	$("#spantitle").append(vettore_regole[idx]["title"]);
-	$("#spantitle1").append(vettore_regole[idx]["title"]);
-	$("#spanauth").append(vettore_regole[idx]["author"]);
-	$("#spandesc").append(vettore_regole[idx]["description"]);
-	$("#spanstatus").append(status);
+	if ((vettore_regole[idx]["status"]==1)){
+		$("#spantitle").empty();
+		$("#spantitle1").empty();
+		$("#spanauth").empty();
+		$("#spandesc").empty();
+		$("#spanstatus").empty();
+		$("#spanjs").empty();
+		$("#spancss").empty();
+		$("#spantitle").append(vettore_regole[idx]["title"]);
+		$("#spantitle1").append(vettore_regole[idx]["title"]);
+		$("#spanauth").append(vettore_regole[idx]["author"]);
+		$("#spandesc").append(vettore_regole[idx]["description"]);
+		$("#spanstatus").append(status);
 
-	//invisible
-	$("#spanjs").append(vettore_regole[idx]["js"]);
-	$("#spancss").append(vettore_regole[idx]["css"]);
+		//invisible
+		$("#spanjs").append(vettore_regole[idx]["js"]);
+		$("#spancss").append(vettore_regole[idx]["css"]);
 
-	$("#navigate_rule_close_top").empty();
-	$("#navigate_rule_close_top").append('<span idx="'+idx+'" class="span_nc">'+vettore_regole[idx]["title"]+'</span>');
+		$("#navigate_rule_close_top").empty();
+		$("#navigate_rule_close_top").append('<span idx="'+idx+'" class="span_nc">'+vettore_regole[idx]["title"]+'</span>');
+	}else if(vettore_regole[idx]["status"]==0){
+		if(vettore_regole[idx]["author"]==user){
+			$("#spantitle").empty();
+			$("#spantitle1").empty();
+			$("#spanauth").empty();
+			$("#spandesc").empty();
+			$("#spanstatus").empty();
+			$("#spanjs").empty();
+			$("#spancss").empty();
+			$("#spantitle").append(vettore_regole[idx]["title"]);
+			$("#spantitle1").append(vettore_regole[idx]["title"]);
+			$("#spanauth").append(vettore_regole[idx]["author"]);
+			$("#spandesc").append(vettore_regole[idx]["description"]);
+			$("#spanstatus").append(status);
+
+			//invisible
+			$("#spanjs").append(vettore_regole[idx]["js"]);
+			$("#spancss").append(vettore_regole[idx]["css"]);
+
+			$("#navigate_rule_close_top").empty();
+			$("#navigate_rule_close_top").append('<span idx="'+idx+'" class="span_nc">'+vettore_regole[idx]["title"]+'</span>');
+		}
+	}
 }
 
 function load_title_nc_bot(){
-	$("#seltit").append('<option class="first-child" idx="'+vettore_regole[0]["id"]+'" id="op_0" value="'+vettore_regole[0]["title"]+'">'+vettore_regole[0]["title"]+'</option>');
+	if (vettore_regole[0]["status"]==1){
+		$("#seltit").append('<option class="first-child" idx="'+vettore_regole[0]["id"]+'" id="op_0" value="'+vettore_regole[0]["title"]+'">'+vettore_regole[0]["title"]+'</option>');
+	}
+	else if (vettore_regole[0]["status"]==0){
+		if(vettore_regole[0]["author"]==user){
+			$("#seltit").append('<option class="first-child" idx="'+vettore_regole[0]["id"]+'" id="op_0" value="'+vettore_regole[0]["title"]+'">'+vettore_regole[0]["title"]+'</option>');
+		}
+	}
 	for(var i=1; i<vettore_regole.length-1; i++){
-		$("#seltit").append('<option idx="'+vettore_regole[i]["id"]+'" id="op_'+i+'" value="'+vettore_regole[i]["title"]+'">'+vettore_regole[i]["title"]+'</option>');
+		if (vettore_regole[i]["status"]==1){
+			$("#seltit").append('<option idx="'+vettore_regole[i]["id"]+'" id="op_'+i+'" value="'+vettore_regole[i]["title"]+'">'+vettore_regole[i]["title"]+'</option>');
+		}
+		else if (vettore_regole[i]["status"]==0){
+			if(vettore_regole[i]["author"]==user){
+				$("#seltit").append('<option idx="'+vettore_regole[i]["id"]+'" id="op_'+i+'" value="'+vettore_regole[i]["title"]+'">'+vettore_regole[i]["title"]+'</option>');
+			}
+		}
 	}
 	var j=vettore_regole.length-1;
-	$("#seltit").append('<option class="last-child" idx="'+vettore_regole[j]["id"]+'" id="op_'+j+'" value="'+vettore_regole[j]["title"]+'">'+vettore_regole[j]["title"]+'</option>');
+	if (vettore_regole[j]["status"]==1){
+		$("#seltit").append('<option class="last-child" idx="'+vettore_regole[j]["id"]+'" id="op_'+j+'" value="'+vettore_regole[j]["title"]+'">'+vettore_regole[j]["title"]+'</option>');
+	}
+	else if (vettore_regole[j]["status"]==0){
+		if(vettore_regole[j]["author"]==user){
+			$("#seltit").append('<option class="last-child" idx="'+vettore_regole[j]["id"]+'" id="op_'+j+'" value="'+vettore_regole[j]["title"]+'">'+vettore_regole[j]["title"]+'</option>');
+		}
+	}
 }
 
 function hide_cont(){
@@ -492,7 +537,6 @@ function makecopy(){
 
       /* Alerts the results */
       posting.done(function( data ) {
-        alert(data);
         window.location.href = "index_logged.php?doc="+all_doc[0][2]+"&rule="+$('#titlecpy').val()+"?pass=0"; 
       });
     });
@@ -533,7 +577,6 @@ function create_rule(){
 	      	if (data != "titolo esistente"){
 	      		window.location.href = data;
 	      	}else{
-	      		alert(data);
 	      	}
 	      });
 	  });
@@ -617,7 +660,6 @@ function save1(jscode, csscode){
 
       /* Alerts the results */
       posting1.done(function( data1 ) {
-      	alert(data1)
       	window.location.href =  data1;
       });
   });
@@ -689,7 +731,6 @@ function pass(){
 
 			/* Alerts the results */
 			posting.done(function( data ) {
-				alert(data);
 				window.location.href = "index_logged.php?doc=Informal Ontology Design&rule="+curr_rule+"&pass=0";
 			});
 		});

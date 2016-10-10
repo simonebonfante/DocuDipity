@@ -116,7 +116,6 @@ function create_passage(){
 
       /* Alerts the results */
       posting.done(function( data ) {
-      	alert(data);
       	window.location.href = data;
 
       });
@@ -267,12 +266,11 @@ function loadgroup(){
 			$("#spanaltre").addClass("hide");
 			$("#tabdocs").removeClass("hide");
 			$("#tabdocs").empty();
-			$("#tabdocs").append("<tr><th>Title</th><th>Author</th><th>Group</th><th>Load</th></tr>");
+			$("#tabdocs").append("<tr><th>Title</th><th>Group</th><th>Load</th></tr>");
 			for(var j=2; j<titledocs.length; j++){
 				if(g==groupdocs[j]){
-					$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="authd'+j+'"></td><td id="groupd'+j+'"></td><td><button id="loadd'+j+'" class="btn btn-default load" idx="'+j+'">Load</button></td></tr>');
+					$("#tabdocs").append('<tr><td id="titd'+j+'"></td><td id="groupd'+j+'"></td><td><button id="loadd'+j+'" class="btn btn-default load" idx="'+j+'">Load</button></td></tr>');
 					$("#titd"+j).append(titledocs[j]);
-					$("#authd"+j).append("Simone");
 					$("#groupd"+j).append(groupdocs[j]);
 				
 				}
@@ -291,29 +289,24 @@ function editpub(){
 		title=$("#titp"+idx).text();
 		status=$("#statp"+idx).text();
 		op="load";
-		alert(op);
 	});
 	$("#miepub").on('click', '.delete', function(){
 		idx=$(this).attr("idx");
 		title=$("#titp"+idx).text();
 		status=$("#statp"+idx).text();
 		op="delete";
-		alert(op);
 	});
 	$("#miepub").on('click', '.duplicate', function(){
 		idx=$(this).attr("idx");
 		title=$("#titp"+idx).text();
 		status=$("#statp"+idx).text();
 		op="duplicate";
-		alert(op);
 	});
 	$("#miepub").on('click', '.changestatus', function(){
 		idx=$(this).attr("idx");
 		title=$("#titp"+idx).text();
 		status=$("#statp"+idx+" span").text();
-		alert(status);
 		op="change";
-		alert(op);
 	});
 	/* attach a submit handler to the form */
     $("#formpub").submit(function(event) {
@@ -344,32 +337,25 @@ function editpriv(){
 		idx=$(this).attr("idx");
 		title=$("#titpp"+idx).text();
 		status=$("#statppp"+idx).text();
-		alert(status);
 		op="load";
 	});
 	$("#miepriv").on('click', '.delete', function(){
 		idx=$(this).attr("idx");
 		title=$("#titpp"+idx).text();
 		status=$("#statppp"+idx).text();
-		alert(status);
 		op="delete";
-		alert(op);
 	});
 	$("#miepriv").on('click', '.duplicate', function(){
 		idx=$(this).attr("idx");
 		title=$("#titpp"+idx).text();
 		status=$("#statppp"+idx).text();
-		alert(status);
 		op="duplicate";
-		alert(op);
 	});
 	$("#miepriv").on('click', '.changestatus', function(){
 		idx=$(this).attr("idx");
 		title=$("#titpp"+idx).text();
 		status=$("#statppp"+idx).text();
-		alert(status);
 		op="change";
-		alert(op);
 	});
 
 	/* attach a submit handler to the form */
@@ -408,7 +394,6 @@ function editaltre(){
 		title=$("#tit"+idx).text();
 		status=$("#stat"+idx).text();
 		op="duplicate";
-		alert(op);
 	});
 	/* attach a submit handler to the form */
     $("#formaltre").submit(function(event) {
@@ -455,7 +440,6 @@ function loaddoc(){
 
       /* Alerts the results */
       posting.done(function( data ) {
-      	alert(data);
       	window.location.href=data;
       });
     });
@@ -520,7 +504,6 @@ function loadzip(){
             			}
 					    //count_group(version,xmlns, idx);
 					}
-					alert(controllo_gruppo);
             		if(controllo_gruppo==0){
             			alert("Non sono dello stesso gruppo");
             			for(var j=0; j<data.length; j++){
